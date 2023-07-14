@@ -2,7 +2,8 @@
 	"name": "starrail-character",
 	"version": "0.0.1",
 	"scripts": {
-		"dev": "vite dev",
+		"start": "npm run dev",
+		"dev": "vite dev --host",
 		"build": "vite build",
 		"preview": "vite preview",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./jsconfig.json",
@@ -28,5 +29,8 @@
 		"vite": "^4.3.6",
 		"vitest": "^0.32.2"
 	},
-	"type": "module"
+	"type": "module",
+	"dependencies": {
+		"three": "^0.154.0"
+	}
 }
