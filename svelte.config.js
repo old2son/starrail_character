@@ -9,6 +9,8 @@ const config = {
 		adapter: adapter(),
 		alias: {
             '@images': 'src/lib/images',
+            '@videos': 'src/lib/images',
+            '@src': 'src',
         },
 		paths: {
 			base: '',

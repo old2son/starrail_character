@@ -1,11 +1,12 @@
 <script>
     import './styles.css';
+    import { title } from '@src/stores.js';
 </script>
 
-<div>
-    <a href="/">home</a>
-    <a href="/about">about</a>
-    <a href="/characters">characters</a>
-</div>
+<svelte:head>
+    <title>{$title}</title>
+    <meta name="description" content={$title} />
+</svelte:head>
 
 <slot/>
+
