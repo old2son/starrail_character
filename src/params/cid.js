@@ -1,3 +1,3 @@
 export function match(value) {
-	return /^[0-9]$/.test(value);
+	return /^qq|syq|xf$/.test(value);
 }

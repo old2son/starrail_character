@@ -8,5 +8,4 @@
     <meta name="description" content={$title} />
 </svelte:head>
 
-<slot/>
-
+<slot />

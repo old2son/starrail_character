@@ -1,11 +1,20 @@
 <script>
-	const arr = [6,7,8,9];
+	const model = ['qq', 'syq', 'xf'];
 </script>
 
 <nav>
-	{#each arr as num}
-		<a href="/characters/{num}">{num}</a>
+	{#each model as name}
+		<a href="/characters/{name}">{name}</a>
 	{/each}
 </nav>
 
 <slot />
+
+
+<style>
+	a {
+		color: aliceblue;
+	}
+</style>
+
+
