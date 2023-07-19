@@ -1,3 +1,6 @@
+/**
+ * @param {string} value
+ */
 export function match(value) {
-	return /^qq|syq|xf$/.test(value);
+	return /^qq|syq|fx$/.test(value);
 }

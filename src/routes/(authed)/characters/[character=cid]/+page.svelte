@@ -1,5 +1,3 @@
-
-
 <script>
     import * as THREE from 'three';
     // @ts-ignore
@@ -29,9 +27,9 @@
         const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
         scene.add(ambientLight);
 
-        const loader = new MMDLoader().setPath( `../src/lib/model/xf/` );
+        const loader = new MMDLoader().setPath( `../src/lib/model/fx/` );
         loader.load(
-            'xf.pmx',
+            'fx.pmx',
             // @ts-ignore
             function ( mesh ) {
                 scene.add( mesh );

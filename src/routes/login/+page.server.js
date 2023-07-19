@@ -21,6 +21,8 @@ export const actions = {
 
 		if (data.get('passphrase') === PASSPHRASE) {
 			cookies.set('logged_in', 'true', {
+				httpOnly: false,
+				secure: false,
 				path: '/'
 			});
 
