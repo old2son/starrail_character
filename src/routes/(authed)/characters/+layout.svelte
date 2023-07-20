@@ -12,7 +12,19 @@
 <slot />
 
 <style>
-	a {
-		color: aliceblue;
+	nav {
+		display: flex;
+		justify-content: space-around;
+		padding: 0 20px;
+		margin: 20px;
+		border-radius: 40px;
+		line-height: 40px;
+		overflow: hidden;
+		background-color: #fff;
+		
+	}
+
+	nav a {
+		color: var(--color-theme-1);
 	}
 </style>

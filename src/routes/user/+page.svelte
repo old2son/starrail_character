@@ -1,5 +1,5 @@
 <script>
-	import src from '@images/angle1.webp';
+	import src from '$lib/images/angle1.webp';
 	import { title } from '@src/stores.js';
     title.set('user page'); 
 </script>

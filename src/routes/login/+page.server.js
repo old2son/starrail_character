@@ -9,12 +9,21 @@
 import { redirect, fail } from '@sveltejs/kit';
 import { PASSPHRASE } from '$env/static/private';
 
+/**
+ * @param {any} ookies
+ * 
+ */
 export function load({ cookies }) {
 	if (cookies.get('logged_in')) {
 		throw redirect(307, '/');
 	}
 }
 
+/**
+ * @param {Object} params
+ * @param {import('@sveltejs/kit').Cookies} params.cookies
+ * @param {Request} params.request 
+ */
 export const actions = {
 	default: async ({ request, cookies }) => {
 		const data = await request.formData();
