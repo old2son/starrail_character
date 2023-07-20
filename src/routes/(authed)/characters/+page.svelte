@@ -39,24 +39,36 @@
     {:else}
         请选择角色
     {/if}
-
-    <Search data={setSource}>
-        <ol>
-            <li><a href="{item.source}">{item.name}</a></li>
-        </ol>
-    </Search>
 </div>
+
+<ol>
+    <Search data={setSource} let:item={prop}>
+        <li><a href="{prop.source}">{prop.name}</a></li>
+    </Search>
+</ol>
 
 <style>
     ol {
-        flex-basis: 100%;
-        padding: 0;
+        display: flex;
+        justify-content: space-around;
+        flex-wrap: wrap;
+        position: fixed;
+        left: 0px;
+        right: 0px;
+        bottom: 0px;
+        padding: 20px;
         margin: 0;
         list-style: none;
+        border-radius: 8px 8px 0 0;
+        background-color: #fff;
+    }
+
+    ol li {
+        line-height: 36px;
     }
 
     ol li a {
-        color: #fff;
+        color: var(--color-theme-1);
     }
 
     .page-characters {
