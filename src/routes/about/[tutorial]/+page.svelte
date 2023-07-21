@@ -4,30 +4,40 @@
 	title.set(data.param);
 </script>
 
-<div class="detail">
-	{@html data.cont}
+<div role="article">
+	<div class="detail">
+		{@html data.cont}
+	</div>
 </div>
 
 <style>
-    .detail {
-        padding: 20px;
-        border: 4px;
-        text-align: center;
-        background-color: #fff;
+	[role='article'] {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		height: 100vh;
+	}
 
-        & h1,
-        & h2,
-        & h3,
-        & h4,
-        & h5,
-        & h6 {
-            color: #333;
-            font-size: 20px;
-        }
+	.detail {
+		padding: 20px;
+		margin: 20px;
+		border-radius: 4px;
+		text-align: center;
+		background-color: #fff;
 
-        & p {
-            color: #333;
-            font-size: 16px;
-        }
-    }
+		& h1,
+		& h2,
+		& h3,
+		& h4,
+		& h5,
+		& h6 {
+			color: #333;
+			font-size: 20px;
+		}
+
+		& p {
+			color: #333;
+			font-size: 16px;
+		}
+	}
 </style>
