@@ -7,7 +7,6 @@
 	import { onMount, onDestroy, beforeUpdate, afterUpdate } from 'svelte';
 	import { page } from '$app/stores';
     import { title } from '@src/stores.js';
-	import { load } from '@src/routes/+page.server';
     title.set($page.params.character);
 
 	/**
