@@ -20,7 +20,8 @@ const config = {
 		},
 		paths: {
 			base: '', // url 路径前缀
-			// assets: 'https://cdn.example.com'  // 静态资源地址
+			assets: process.env.NODE_ENV === 'development' ? '' : 'https://example',  // 静态资源地址
+			relative: false,
 		}
 	}
 };

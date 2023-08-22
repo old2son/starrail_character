@@ -21,7 +21,6 @@
 		line-height: 40px;
 		overflow: hidden;
 		background-color: #fff;
-		
 	}
 
 	nav a {

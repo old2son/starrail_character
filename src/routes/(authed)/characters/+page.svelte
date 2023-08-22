@@ -1,5 +1,5 @@
 <script>
-    import { assets } from '$app/paths';
+    import { assets, base } from '$app/paths';
     import { title, characterActive } from '@src/stores.js';
     import { setSource } from './dataSource.js';
     import Cards from './cards.svelte';
