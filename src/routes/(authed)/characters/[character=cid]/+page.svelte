@@ -72,7 +72,7 @@
 		 */
 		loadModel(name) {
 			const that = this;
-			const loader = new MMDLoader().setPath(`../src/lib/model/${name}/`);
+			const loader = new MMDLoader().setPath(`/model/${name}/`);
 			loader.load(
 				`${name}.pmx`,
 				function (/** @type {THREE.Object3D<THREE.Event>} */ mesh) {

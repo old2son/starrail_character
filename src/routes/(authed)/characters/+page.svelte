@@ -30,7 +30,8 @@
 <div class="page-characters">
     {#if Object.keys($characterActive).length}
         <Cards>
-            <div slot="header" class="avatar-wrap"><img src="{assets}/src/lib/images/{character.name}.jpg" alt="{character.cName}"></div>
+            <!-- static 的图片直接直接根目录路径 -->
+            <div slot="header" class="avatar-wrap"><img src="/images/{character.name}.jpg" alt="{character.cName}"></div>
             <div>{character.cName}</div>
             <div slot="footer">{@html character.cont}</div>
         </Cards>

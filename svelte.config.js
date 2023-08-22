@@ -9,7 +9,6 @@ const config = {
 		adapter: adapter(),
 		// import 路径别名
 		alias: {
-            '@images': 'src/lib/images',
             '@videos': 'src/lib/images',
             '@src': 'src',
         },
@@ -20,9 +19,11 @@ const config = {
 		},
 		paths: {
 			base: '', // url 路径前缀
-			assets: process.env.NODE_ENV === 'development' ? '' : 'https://example',  // 静态资源地址
+			// assets: process.env.NODE_ENV === 'development' ? '' : 'https://example',  // 线上静态资源地址
+			assets: '',
 			relative: false,
-		}
+		},
+		appDir: '_app', // 相对 assets 的线上路径, https://example/_app/immutable/assets/0.45a00fd7.css
 	}
 };
 
