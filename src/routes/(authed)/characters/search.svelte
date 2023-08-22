@@ -3,7 +3,7 @@
 	 * @type {any[]}
 	 */
 	export let data;
-
+	
 	let search = '';
 
 	$: filterFn = (/** @type {{ source: string; }} */ item) => {
@@ -13,7 +13,7 @@
 
 <li class="li-input">
 	<label>
-		Filter: <input type="text" bind:value={search} />
+		Filter(url) : <input type="text" bind:value={search} />
 	</label>
 </li>
 

@@ -25,8 +25,6 @@
     };
 
     $: character = Object.assign(character, $characterActive);
-
-    let item = setSource[0];
 </script>
 
 <div class="page-characters">

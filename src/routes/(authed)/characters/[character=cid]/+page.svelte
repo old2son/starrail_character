@@ -95,6 +95,13 @@
 			requestAnimationFrame(this.animate);
 			this.renderer.render(this.scene, this.camera);
 		}
+
+		dispose() {
+			this.renderer.dispose();
+			this.controls.dispose();
+			this.camera.clearViewOffset();
+			this.scene.clear();
+		}
 	}
 
 	onMount(() => {});
@@ -103,14 +110,19 @@
 	beforeUpdate(() => {});
 
 	afterUpdate(() => {
-        Model = Model || new model(canvas);
-        var ll = Model.loadModel($page.params.character);
-        ll.removeAll();
+		if (!Model) {
+			Model = Model || new model(canvas);
+		}
+		else {
+			Model.dispose();
+			Model.init();
+		}
+
+		Model.loadModel($page.params.character);
 	});
 
 	onDestroy(() => {
-		console.log('destroy');
-		// canvas.remove();
+		Model.dispose();
 	});
 </script>
 
