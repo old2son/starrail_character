@@ -9,7 +9,25 @@ export const actions = {
 			httpOnly: false,
 			secure: false,
 			path: '/'
-		 });
+		});
 		throw redirect(303, '/');
+	},
+	saveAvatar: async ({ cookies, request }) => {
+		const data = await request.formData();
+		// @ts-ignore
+		cookies.set('avatarSrc', data.get('avatar') || '', {
+			httpOnly: false,
+			secure: false,
+			path: '/'
+		});
+		throw redirect(304, '/user');
 	}
 };
+
+export function load({ cookies }) {
+	const avatarSrc = cookies.get('avatarSrc');
+
+	return {
+		avatarSrc
+	};
+}

@@ -22,7 +22,6 @@
 </div>
 
 <style>
-
     .list-tutorial {
         margin: 20px;
         padding: 20px;
