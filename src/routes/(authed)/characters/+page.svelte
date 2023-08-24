@@ -1,4 +1,5 @@
 <script>
+    import { fade } from 'svelte/transition';
     import { title, characterActive } from '@src/stores.js';
     import { setSource } from './dataSource.js';
     import Cards from './cards.svelte';

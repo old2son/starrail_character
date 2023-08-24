@@ -1,8 +1,37 @@
 <script>
     export let data;
+    import { fade } from 'svelte/transition';
     import { title } from '@src/stores.js';
+    import cont1 from './cont1.svelte';
+    import cont2 from './cont2.svelte';
+    import cont3 from './cont3.svelte';
     title.set('about page'); 
+
+    $: tabs = [
+        { name: '前瞻', content: cont1 },
+        { name: '汇总', content: cont2 },
+        { name: '其它', content: cont3 }
+    ]
+	$: activeTab =  0;
 </script>
+
+<div class="tabs-wrap">
+    {#each tabs as tab, idx}
+        <button class="tab" on:click={() => (activeTab = idx)}>
+            {tab.name}
+        </button>
+    {/each}
+</div>
+
+<div class="tabs-cont">
+    {#each tabs as tab, idx}
+        {#if idx === activeTab}
+            <div in:fade>
+                <svelte:component this={tab.content} />
+            </div>
+        {/if}
+    {/each}
+</div>
 
 <div class="page-about">
     <p>健康游戏忠告：</p>
@@ -22,6 +51,32 @@
 </div>
 
 <style>
+    .tabs-wrap {
+        padding-top: 20px;
+        display: flex;
+        justify-content: center;
+
+        & .tab {
+            line-height: 28px;
+            margin: 0 5px;
+            border: 0;
+            border-radius: 4px;
+            cursor: pointer;
+            color: #333;
+            background-color: #fff;
+
+            &:hover {
+                color: #fff;
+                background-color: var(--color-theme-2);
+            }
+        }
+    }
+    
+    .tabs-cont {
+		margin-top: 20px;
+        padding: 0 20px;
+    }
+
     .list-tutorial {
         margin: 20px;
         padding: 20px;

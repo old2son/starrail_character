@@ -1,48 +1,54 @@
 <script>
-    import { beforeNavigate } from '$app/navigation';
-    import './styles.css';
-    import { title } from '@src/stores.js';
+	import { beforeNavigate, afterNavigate } from '$app/navigation';
+	import './styles.css';
+	import { title } from '@src/stores.js';
 
-    let hide = false;
+	let hide = true;
 
-    beforeNavigate(({to}) => {
-        // @ts-ignore
-        if (to?.route?.id?.match(/^\/\(authed\)\/characters$/)?.length > 0) {
-            hide = true;
-        }
-        else {
-            hide = false;
-        }
-    });
+	afterNavigate(({ to }) => {
+		if (
+			// @ts-ignore
+			to?.route?.id?.match(/^\/$/)?.length > 0 ||
+			// @ts-ignore
+			to?.route?.id?.match(/^\/\(authed\)\/characters$/)?.length > 0
+		) {
+			hide = true;
+		} else {
+			hide = false;
+		}
+	});
+
+	// 刷新页面不触发
+	beforeNavigate(() => {});
 </script>
 
 <svelte:head>
-    <title>{$title}</title>
-    <meta name="description" content={$title} />
+	<title>{$title}</title>
+	<meta name="description" content={$title} />
 </svelte:head>
 
 <slot />
 
-<footer>
-    <a class="btn-back" class:hide href="/">go back</a>
+<footer> 
+    <a class="btn-back" class:hide href="/" >go back</a>
 </footer>
 
 <style>
-    .hide {
-        display: none;
-    }
+	.hide {
+		display: none;
+	}
 
-    .btn-back {
-        position: fixed;
-        left: 50%;
-        bottom: 20px;
-        width: 50vw;
-        height: 35px;
-        line-height: 35px;
-        text-align: center;
-        border-radius: 40px;
-        transform: translateX(-50%);
-        color: #333;
-        background-color: #fff;
-    }
+	.btn-back {
+		position: fixed;
+		left: 50%;
+		bottom: 20px;
+		width: 50vw;
+		height: 35px;
+		line-height: 35px;
+		text-align: center;
+		border-radius: 40px;
+		transform: translateX(-50%);
+		color: #fff;
+		background-color: grey;
+	}
 </style>
