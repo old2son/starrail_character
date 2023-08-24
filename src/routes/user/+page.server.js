@@ -20,6 +20,8 @@ export const actions = {
 			secure: false,
 			path: '/'
 		});
+
+		throw redirect(303, '/user');
 	}
 };
 
