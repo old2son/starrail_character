@@ -14,8 +14,13 @@ export const actions = {
 	},
 	saveAvatar: async ({ cookies, request }) => {
 		const data = await request.formData();
-		// @ts-ignore
-		cookies.set('avatarSrc', data.get('avatar') || '', {
+		const src = data.get('avatar');
+
+		if(typeof src !== 'string') {
+			return;
+		}
+
+		cookies.set('avatarSrc', src, {
 			httpOnly: false,
 			secure: false,
 			path: '/'

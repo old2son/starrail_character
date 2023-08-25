@@ -25,7 +25,6 @@ export function load({ cookies }) {
  * @param {Request} params.request 
  */
 export const actions = {
-	// @ts-ignore
 	default: async ({ request, cookies }) => {
 		const data = await request.formData();
 

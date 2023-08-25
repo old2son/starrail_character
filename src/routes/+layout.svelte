@@ -6,14 +6,10 @@
 	let hide = true;
 
 	afterNavigate(({ to }) => {
-		if (
-			// @ts-ignore
-			to?.route?.id?.match(/^\/$/)?.length > 0 ||
-			// @ts-ignore
-			to?.route?.id?.match(/^\/\(authed\)\/characters$/)?.length > 0
-		) {
+		if (to?.route?.id?.match(/^\/$/)?.length || to?.route?.id?.match(/^\/\(authed\)\/characters$/)?.length) {
 			hide = true;
-		} else {
+		} 
+		else {
 			hide = false;
 		}
 	});

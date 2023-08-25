@@ -1,14 +1,18 @@
 <script>
-	import { afterNavigate } from '$app/navigation';
+    import { fade } from 'svelte/transition';
+	import { beforeNavigate, afterNavigate } from '$app/navigation';
 	import * as THREE from 'three';
 	// @ts-ignore
 	import { MMDLoader } from 'three/addons/loaders/MMDLoader.js';
 	// @ts-ignore
 	import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 	import { onMount, beforeUpdate, afterUpdate, onDestroy, tick } from 'svelte';
-	import { page } from '$app/stores';
+	import { navigating, page } from '$app/stores';
     import { title } from '@src/stores.js';
-    title.set($page.params.character);
+    title.set(`角色-${$page.params.character}`);
+
+	let progress = 0;
+	$: progress
 
 	/**
 	 * @type {HTMLCanvasElement}
@@ -52,7 +56,7 @@
 
 		/**
 		 * @param {{ x: number; y: number; z: number; }} pos
-		 * @param {{x: number;y: number;z: number;}} look
+		 * @param {{ x: number;y: number;z: number; }} look
 		 */
 		setCamera(pos, look) {
 			this.camera.position.x = pos.x;
@@ -94,7 +98,7 @@
 					that.animate();
 				},
 				function (/** @type {{ loaded: number; total: number; }} */ xhr) {
-					console.log((xhr.loaded / xhr.total) * 100 + '% loaded');
+					progress = Math.round((xhr.loaded / xhr.total) * 100);
 				},
 				function (/** @type {any} */ error) {
 					throw new Error(error);
@@ -113,7 +117,7 @@
 		dispose() {
 			this.renderer.dispose();
 			this.camera.clear();
-			this.controls.dispose();
+			// this.controls.dispose();
 			this.scene.clear();
 		}
 	}
@@ -126,13 +130,22 @@
 	// onMount 初始化前会执行一次beforeUpdate
 	beforeUpdate(() => {});
 
-	afterUpdate(async () => {
-		await tick();
+	afterUpdate(() => {});
+
+	beforeNavigate(({to}) => {
+		if (to === null || to?.params === null) {
+			return
+		}
+
+		// beforeNavigate 比 $page 快, 所以这里要用 to.params
+    	title.set(`角色-${to.params.character}`);
+		progress = 0;
+		Model.dispose();
+		Model.init();
+		Model.loadModel(to.params.character);
 	});
 
-	afterNavigate(() => {
-		
-	});
+	afterNavigate(() => {});
 
 	onDestroy(() => {
 		Model.dispose();
@@ -145,6 +158,10 @@
 	</div>
 	<h1>{$page.params.character}</h1>
 </div>
+
+{#if progress !== 100}
+	<div in:fade out:fade class="mask" >loading {progress}%</div>
+{/if}
 
 <div class="range-wrap" on:mouseenter={()=>{isMove = true;}} on:mouseleave={()=>{isMove = false;}} role="form">
 	<h2>set camera position：</h2>
@@ -198,6 +215,21 @@
 			color: #fff;
 		}
 	}
+
+	.mask {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		position: fixed;
+		top: 0;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		z-index: 2;
+		color: #fff;
+		font-size: 18px;
+		background: hsla(0, 0%, 0%, 0.5);
+	}
 	
 	.range-wrap {
 		padding: 20px 20px 20vh;
@@ -209,8 +241,8 @@
 
 		& button {
 			display: block;
-			width: 30vw;
 			line-height: 35px;
+			padding: 0 8px;
 			margin: 20px auto;
 			cursor: pointer;
 			border: 0;
