@@ -20,6 +20,8 @@
 	nav {
 		display: flex;
 		justify-content: space-around;
+		position: relative;
+		z-index: 2;
 		padding: 0 20px;
 		margin: 20px;
 		border-radius: 40px;

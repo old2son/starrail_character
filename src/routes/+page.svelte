@@ -11,24 +11,60 @@
 	 * @type {HTMLCanvasElement}
 	 */
     let canvas;
+    /**
+	 * @type {HTMLVideoElement}
+	 */
+    let video;
+
+    $: cw = canvas?.width < 1440 ? 1440 : canvas?.width > 1920 ? 1920 : canvas?.width;
+    $: ch = canvas?.height < 768 ? 768 : canvas?.height > 1920 ? 1080 : canvas?.width / 1.777 ;
 
     onMount(() => {
+        videoInit();
         canvasSize();
+        draw();
     });
+
+    const videoInit = () => {
+        video = document.createElement('video');
+        video.addEventListener('ended', () => {
+            video.play();
+        });
+
+        video.addEventListener('click', () => {
+            video.play();
+        });
+        video.getAttribute('style');
+        video.src = videoHome;
+        video.muted = true;
+        video.autoplay = true;
+        video.click();
+        console.log(video.getAttribute('style'))
+    }
 
     const canvasSize = () => {
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
     }
 
+    const draw = () => {
+        let ctx = canvas.getContext('2d');
+        if (!ctx) {
+            throw new Error('canvas 2d context is null');
+        }
+        ctx.drawImage(video, 0, 0, 1920, 1080, 0, 0, cw, ch);  
+        requestAnimationFrame(draw);
+    }
 </script>
 
 <Nav {logged}/>
 <svelte:window on:resize={canvasSize} />
-<canvas bind:this={canvas} />
-<!-- todo 首页 canvas 视频 -->
-<!-- <track kind="captions"> -->
-<video src={videoHome}></video>
-<style>
 
+<canvas class="canvas" bind:this={canvas} />
+<style>
+    .canvas {
+        position: fixed;
+        top: 0;
+        z-index: 1;
+    }
 </style>
