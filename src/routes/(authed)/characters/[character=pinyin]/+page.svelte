@@ -11,8 +11,15 @@
     import { title } from '@src/stores.js';
     title.set(`角色-${$page.params.character}`);
 
-	let progress = 0;
-	$: progress
+	/**
+	 * @type {string | number | NodeJS.Timeout | null | undefined}
+	 */
+	let timeId = null;
+	let loadFin = false;
+	let lc = false;
+	let isshow = false; // 显示没总长度的已加载
+
+	$: progress = 0;
 
 	/**
 	 * @type {HTMLCanvasElement}
@@ -97,8 +104,27 @@
 					that.scene.add(mesh);
 					that.animate();
 				},
-				function (/** @type {{ loaded: number; total: number; }} */ xhr) {
-					progress = Math.round((xhr.loaded / xhr.total) * 100);
+				function (/** @type {{ loaded: number; total: number; lengthComputable: boolean}} */ xhr) {
+					const {loaded, total, lengthComputable} = xhr;
+
+					if (timeId) {
+						clearTimeout(timeId);
+					}
+
+					timeId = setTimeout(() => {
+						loadFin = true;
+					}, 1500);
+
+					lc = lengthComputable;
+
+					// lengthComputable 为 false 表示无法获取总长度
+					if (lc) {
+						progress = Math.round((loaded / total) * 100);
+					}
+					else {
+						isshow = true;
+						progress = parseFloat((loaded / 1024 / 1024).toFixed(2));
+					}
 				},
 				function (/** @type {any} */ error) {
 					throw new Error(error);
@@ -159,8 +185,10 @@
 	<h1>{$page.params.character}</h1>
 </div>
 
-{#if progress !== 100}
-	<div in:fade out:fade class="mask" >loading {progress}%</div>
+{#if progress !== 100 && lc}
+	<div in:fade out:fade class="mask">loading {progress}%</div>
+{:else if !lc && !loadFin && isshow}
+	<div in:fade out:fade class="mask">已加载 {progress} MB</div>
 {/if}
 
 <div class="range-wrap" on:mouseenter={()=>{isMove = true;}} on:mouseleave={()=>{isMove = false;}} role="form">
@@ -205,7 +233,7 @@
 		flex-wrap: wrap;
 
 		& canvas {
-			width: 50vh;
+			width: 50vw;
 			height: 50vh;
 		}
 

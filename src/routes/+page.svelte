@@ -2,7 +2,7 @@
     export let data;
     import Nav from '@src/routes/nav.svelte';
     import videoHome from '$lib/videos/home.mp4';
-    import { onMount } from 'svelte';
+    import { onMount, onDestroy } from 'svelte';
     import { title } from '@src/stores.js';
     title.set('home page'); 
     const logged = typeof data.logged === 'boolean' ? data.logged : false;
@@ -34,12 +34,11 @@
         video.addEventListener('click', () => {
             video.play();
         });
-        video.getAttribute('style');
+
         video.src = videoHome;
         video.muted = true;
         video.autoplay = true;
         video.click();
-        console.log(video.getAttribute('style'))
     }
 
     const canvasSize = () => {
@@ -48,10 +47,16 @@
     }
 
     const draw = () => {
+        if (!canvas) {
+            return;
+        }
+
         let ctx = canvas.getContext('2d');
+
         if (!ctx) {
             throw new Error('canvas 2d context is null');
         }
+
         ctx.drawImage(video, 0, 0, 1920, 1080, 0, 0, cw, ch);  
         requestAnimationFrame(draw);
     }
@@ -61,6 +66,7 @@
 <svelte:window on:resize={canvasSize} />
 
 <canvas class="canvas" bind:this={canvas} />
+
 <style>
     .canvas {
         position: fixed;

@@ -3,6 +3,11 @@ import { defineConfig } from 'vitest/config';
 
 export default defineConfig({
 	plugins: [sveltekit()],
+	server: {
+		proxy: {
+			'/news': 'https://query.asilu.com/news/oschina-news',
+		}
+	},
 	test: {
 		include: ['src/**/*.{test,spec}.{js,ts}']
 	}
