@@ -1,5 +1,5 @@
-// import adapter from '@sveltejs/adapter-auto';
-import adapter from '@sveltejs/adapter-node';
+import adapter from '@sveltejs/adapter-auto';
+// import adapter from '@sveltejs/adapter-node';
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
@@ -7,10 +7,7 @@ const config = {
 		// adapter-auto only supports some environments, see https://kit.svelte.dev/docs/adapter-auto for a list.
 		// If your environment is not supported or you settled on a specific environment, switch out the adapter.
 		// See https://kit.svelte.dev/docs/adapters for more information about adapters.
-		adapter: adapter({
-            pages: 'build', // 将预渲染页面写入的目录。它默认为`build`.
-            assets: 'build', // 资源 打包输出目录包括Svelte-kit输出的js和css
-        }),
+		adapter: adapter(),
 		// import 路径别名
 		alias: {
             '@videos': 'src/lib/images',
