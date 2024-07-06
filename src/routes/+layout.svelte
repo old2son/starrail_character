@@ -5,6 +5,10 @@
 
 	let hide = true;
 
+	const goBack = () => {
+    	window.history.back();
+  	}
+
 	afterNavigate(({ to }) => {
 		if (to?.route?.id?.match(/^\/$/)?.length || to?.route?.id?.match(/^\/\(authed\)\/characters$/)?.length) {
 			hide = true;
@@ -26,7 +30,7 @@
 <slot />
 
 <footer> 
-    <a class="btn-back" class:hide href="/" >go back</a>
+    <button class="btn-back" class:hide on:click={goBack}>Go Back</button>
 </footer>
 
 <style>
@@ -42,7 +46,9 @@
 		height: 35px;
 		line-height: 35px;
 		text-align: center;
+		border: 0;
 		border-radius: 40px;
+		cursor: pointer;
 		transform: translateX(-50%);
 		color: #fff;
 		background-color: grey;

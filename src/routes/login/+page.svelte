@@ -14,22 +14,36 @@
 				visible = true;
 			}}>log in</button
 		>
-		<!-- <svelte:window on:click={()=>{visible=false}} /> -->
 	</div>
 </div>
+<svelte:window
+	on:click={(e) => {
+		console.log(e.target);
+		const target = e.target;
+		if (target instanceof HTMLElement && target.classList.contains('js-form-wrap')) {
+			visible = false;
+
+			if (form?.incorrect) {
+				form.incorrect = false;
+			}
+		}
+	}}
+/>
 
 {#if visible || form?.incorrect}
-	<div class="form-wrap">
+	<div class="form-wrap js-form-wrap">
 		<form method="POST" transition:fly={{ y: 100, duration: 500 }}>
 			<div class="form-wrap-inner">
 				<label>
 					enter the passphrase
-					<input name="passphrase" autocomplete="off" />
-
-					{#if form?.incorrect}
-						<p class="error">wrong passphrase!</p>
-					{/if}
+					<input name="passphrase" autocomplete="off" type="password" placeholder="pwd" />
 				</label>
+
+				<button>submit</button>
+
+				{#if form?.incorrect}
+					<p class="error">wrong passphrase!</p>
+				{/if}
 			</div>
 		</form>
 	</div>
@@ -38,8 +52,10 @@
 <style>
 	button {
 		padding: 10px;
+		margin-top: 20px;
 		border: 1px solid #ddd;
 		border-radius: 4px;
+		cursor: pointer;
 		color: (var(--color-theme-1));
 		background-color: #fff;
 	}
@@ -48,6 +64,24 @@
 		width: 100%;
 		display: block;
 		color: #fff;
+	}
+
+	input[name='passphrase'] {
+		display: block;
+		width: 60%;
+		height: 22px;
+		line-height: 22px;
+		padding: 3px 10px;
+		margin: 10px auto 0;
+		outline: none;
+		border: 0;
+		border-radius: 40px;
+		color: #fff;
+		background-color: var(--color-theme-2);
+	}
+
+	input[name='passphrase']::-webkit-input-placeholder {
+		color: #f5f5f5;
 	}
 
 	.page-login {
@@ -63,6 +97,11 @@
 	}
 
 	.error {
+		flex-grow: 0;
+		flex-shrink: 0;
+		flex-basis: 100%;
+		margin: 20px 0 0;
+		text-align: center;
 		color: red;
 	}
 
@@ -82,10 +121,21 @@
 	.form-wrap .form-wrap-inner {
 		display: flex;
 		justify-content: center;
-		align-items: center;
+		flex-wrap: wrap;
+		align-content: flex-start; /* 元素顶部对齐 */
 		width: 50vh;
 		height: 50vh;
 		border-radius: 4px;
-		background-color: #fff;
+		background-color: #f5f5f5;
+	}
+
+	.form-wrap .form-wrap-inner label {
+		flex-grow: 0;
+		flex-shrink: 0;
+		flex-basis: 100%;
+		line-height: 2;
+		margin-top: 70px;
+		text-align: center;
+		font-size: 18px;
 	}
 </style>

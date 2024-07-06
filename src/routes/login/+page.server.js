@@ -1,16 +1,8 @@
-// import { redirect } from '@sveltejs/kit';
-// export const actions = {
-// 	default: ({ cookies, url }) => {
-// 		cookies.set('logged_in', 'true', { path: '/' });
-// 		throw redirect(303, url.searchParams.get('redirectTo') ?? '/');
-// 	}
-// };
-
 import { redirect, fail } from '@sveltejs/kit';
 import { PASSPHRASE } from '$env/static/private';
 
 /**
- * @param {any} ookies
+ * @param {any} cookies
  * 
  */
 export function load({ cookies }) {
@@ -25,7 +17,7 @@ export function load({ cookies }) {
  * @param {Request} params.request 
  */
 export const actions = {
-	default: async ({ request, cookies }) => {
+	default: async ({ request, cookies, url }) => {
 		const data = await request.formData();
 
 		if (data.get('passphrase') === PASSPHRASE) {
@@ -35,7 +27,8 @@ export const actions = {
 				path: '/'
 			});
 
-			throw redirect(303, '/');
+			const redirectTo = url.searchParams.get('redirectTo') ?? '/';
+			throw redirect(303, redirectTo);
 		}
 
 		return fail(403, {
