@@ -1,9 +1,10 @@
 <script>
-    import { title, characterActive } from '@src/stores.js';
+    import { title, desc, characterActive } from '@src/stores.js';
     import { setSource } from './dataSource.js';
     import Cards from './cards.svelte';
     import Search from './search.svelte';
-    title.set('characters page');
+    title.set('角色列表');
+    desc.set('角色列表描述');
 
     /**
      * @typedef {Object} Character
@@ -53,7 +54,7 @@
         position: fixed;
         left: 0px;
         right: 0px;
-        bottom: 0px;
+        bottom: 30px;
         padding: 20px;
         margin: 0;
         list-style: none;

@@ -6,13 +6,13 @@
 </script>
 
 <nav>
-	<a href="/">home</a>
-	<a href="/about">about</a>
-	<a href="/characters">characters</a>
+	<a href="/">首页</a>
+	<a href="/about">关于</a>
+	<a href="/characters">角色</a>
 	{#if logged}
-		<a href="/user">user</a>
+		<a href="/user">用户</a>
 	{:else}
-		<a href="/login">login</a>
+		<a href="/login">登录</a>
 	{/if}
 </nav>
 

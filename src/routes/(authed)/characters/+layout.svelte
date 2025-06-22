@@ -5,7 +5,7 @@
 </script>
 
 <nav>
-	{#each character.model as { name, id }}
+	{#each character.model as { name, cName, id }}
 		<a
 			href="/characters/{name}"
 			data-id={id}
@@ -13,7 +13,7 @@
 				if (get(characterId) !== id) {
 					characterId.set(id);
 				}
-			}}>{name}</a
+			}}>{cName}</a
 		>
 	{/each}
 </nav>
@@ -25,7 +25,7 @@
 		display: flex;
 		justify-content: space-around;
 		padding: 0 20px;
-		margin: 20px;
+		margin: 80px 20px;
 		border-radius: 40px;
 		line-height: 40px;
 		overflow: hidden;
