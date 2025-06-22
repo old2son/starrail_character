@@ -5,7 +5,16 @@ export default defineConfig({
 	plugins: [sveltekit()],
 	server: {
 		proxy: {
-			'/news': 'https://query.asilu.com/news/oschina-news',
+			'/newsApi': {
+				target: 'https://api.vvhan.com/api/hotlist/pengPai',
+				changeOrigin: true,
+				rewrite: (path) => path.replace(/^\/newsApi/, '')
+			},
+			'/weatherApi': {
+				target: 'https://v2.xxapi.cn/api/weather',
+				changeOrigin: true,
+				rewrite: (path) => path.replace(/^\/weatherApi/, '')
+			}
 		}
 	},
 	test: {

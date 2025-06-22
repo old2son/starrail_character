@@ -1,12 +1,16 @@
 <script>
     export let data;
-    import Nav from '@src/routes/nav.svelte';
+    import Nav from '@src/lib/component/nav.svelte';
+    import Weather from '@src/lib/component/weather.svelte';
     import videoHome from '$lib/videos/home.mp4';
     import { onMount, onDestroy } from 'svelte';
-    import { title } from '@src/stores.js';
-    title.set('home page'); 
-    const logged = typeof data.logged === 'boolean' ? data.logged : false;
+    import { title, desc } from '@src/stores.js';
+    title.set('首页'); 
+    desc.set('首页描述');
 
+    const logged = typeof data.logged === 'boolean' ? data.logged : false;
+    const city = '广州';
+    
     /**
 	 * @type {HTMLCanvasElement}
 	 */
@@ -63,9 +67,12 @@
 </script>
 
 <Nav {logged}/>
+<Weather {city}/>
+
 <svelte:window on:resize={canvasSize} />
 
 <canvas class="canvas" bind:this={canvas} />
+
 
 <style>
     .canvas {

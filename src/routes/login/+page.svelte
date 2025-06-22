@@ -1,8 +1,9 @@
 <script>
 	export let form;
-	import { title } from '@src/stores.js';
+	import { title, desc } from '@src/stores.js';
 	import { fly } from 'svelte/transition';
-	title.set('login page');
+	title.set('请登陆捏');
+    desc.set('是咪咪喵~');
 	let visible = false;
 </script>
 

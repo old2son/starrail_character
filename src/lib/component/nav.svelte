@@ -23,7 +23,7 @@
 		position: relative;
 		z-index: 2;
 		padding: 0 20px;
-		margin: 20px;
+		margin: 80px 20px;
 		border-radius: 40px;
 		line-height: 40px;
 		overflow: hidden;

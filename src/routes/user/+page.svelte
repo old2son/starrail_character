@@ -4,8 +4,9 @@
 	import avatar1 from '$lib/images/avatar_01.webp';
 	import avatar2 from '$lib/images/avatar_02.gif';
 	import avatar3 from '$lib/images/avatar_03.gif';
-	import { title } from '@src/stores.js';
-    title.set('user page');
+	import { title, desc } from '@src/stores.js';
+    title.set('个人中心');
+    desc.set('来玩吧！');
 
 	$: src = data.avatarSrc || avatar_default;
 	const imgArr = [avatar1, avatar2, avatar3];

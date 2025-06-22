@@ -2,11 +2,12 @@
 	export let data;
 	import { slide } from 'svelte/transition';
 	import { cubicInOut } from 'svelte/easing';
-	import { title } from '@src/stores.js';
+	import { title, desc } from '@src/stores.js';
 	import cont1 from './cont1.svelte';
 	import cont2 from './cont2.svelte';
 	import cont3 from './cont3.svelte';
-	title.set('about page');
+	title.set('关于这里');
+	desc.set('没有描述哦');
 
 	$: tabs = [
 		{ name: '前瞻', content: cont1 },
