@@ -71,9 +71,18 @@
 		outline: none;
 		border: 0;
 		border-bottom: 1px solid var(--color-theme-2);
+		transition: border-bottom 0.3s ease-in-out;
 		color: var(--color-text);
 		font-size: 20px;
 		background-color: #fff;
+
+		&:focus {
+			border-bottom: 1px solid var(--color-theme-1);
+		}
+
+		&::placeholder {
+			color: var(--color-theme-2);
+		}
 	}
 
 	.btn {

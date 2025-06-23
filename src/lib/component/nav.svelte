@@ -18,15 +18,22 @@
 
 <style>
 	nav {
+		--color-nav: #e1b066;
+
 		display: flex;
 		justify-content: space-around;
 		position: relative;
 		z-index: 2;
-		padding: 0 20px;
-		margin: 80px 20px;
-		border-radius: 40px;
+		padding: 0 10px;
+		margin: 0px 0px;
 		line-height: 40px;
 		overflow: hidden;
-		background-color: #fff;
+        background-color: rgba(0,0,0,.8);
+
+		& a {
+			text-decoration: none;
+			color: var(--color-nav);
+			font-size: 18px;
+		}
 	}
 </style>

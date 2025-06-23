@@ -33,7 +33,7 @@
 <footer> 
     <button class="btn-back" class:hide on:click={goBack}>Go Back</button>
 
-	<p class="info-icp">
+	<p class="info-icp" id="icp">
 		<a
 			href="https://beian.mps.gov.cn/#/query/webSearch?code=61011302001964"
 			rel="noreferrer"

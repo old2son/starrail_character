@@ -9,10 +9,10 @@
     desc.set('首页描述');
 
     const logged = typeof data.logged === 'boolean' ? data.logged : false;
+    $: city = '广州';
+
     /** @type {{ [key: string]: any }} */
 	let weatherResult;
-    $: city = '广州';
-    
     /**
 	 * @type {HTMLCanvasElement}
 	 */
@@ -22,11 +22,6 @@
 	 */
     let video;
 
-    // $: cw = canvas?.width < 1440 ? 1440 : canvas?.width > 1920 ? 1920 : canvas?.width ;
-    $: cw = canvas?.width < 1280 ? 1280 : canvas?.width > 1920 ? 1920 : canvas?.width;
-    // $: ch = canvas?.height < 768 ? 768 : canvas?.height > 1920 ? 1080 : canvas?.width / 1.777 ;
-    $: ch = canvas?.height < 768 ? 768 : canvas?.height > 1920 ? 1080 : canvas?.height;
-
     onMount(() => {
         videoInit();
         canvasSize();
@@ -35,18 +30,11 @@
 
     const videoInit = () => {
         video = document.createElement('video');
-        video.addEventListener('ended', () => {
-            video.play();
-        });
-
-        video.addEventListener('click', () => {
-            video.play();
-        });
-
         video.src = videoHome;
         video.muted = true;
         video.autoplay = true;
-        video.click();
+        video.loop = true;
+        video.play();
     }
 
     const canvasSize = () => {
@@ -65,7 +53,35 @@
             throw new Error('canvas 2d context is null');
         }
 
-        ctx.drawImage(video, 0, 0, 1920, 1080, 0, 0, cw, ch);  
+        const cw = canvas.width;
+        const ch = canvas.height;
+
+        const vw = video.videoWidth;
+        const vh = video.videoHeight;
+
+        const canvasRatio = cw / ch;
+        const videoRatio = vw / vh;
+
+        let sx, sy, sw, sh;
+
+        if (videoRatio > canvasRatio) {
+            // 视频更宽，左右裁剪
+            sh = vh;
+            sw = vh * canvasRatio;
+            sx = (vw - sw) / 2;
+            sy = 0;
+        } 
+        else {
+            // 视频更高，上下裁剪
+            sw = vw;
+            sh = vw / canvasRatio;
+            sx = 0;
+            // sy = (vh - sh) / 2;
+            // 裁剪上面部分，主要展示下方人物
+            sy = (vh - sh) / 0.85; 
+        }
+
+        ctx.drawImage(video, sx, sy, sw, sh, 0, 0, cw, ch);
         requestAnimationFrame(draw);
     }
 
@@ -95,7 +111,7 @@
 
 <svelte:window on:resize={canvasSize} />
 
-<canvas class="canvas" bind:this={canvas} />
+<canvas class="canvas" bind:this={canvas}  style="width: 100vw; height: 100vh;" />
 
 <style>
     .canvas {
