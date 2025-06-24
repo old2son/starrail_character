@@ -1,5 +1,6 @@
 <script>
 	export let data;
+	import { onMount } from 'svelte';
 	import { slide } from 'svelte/transition';
 	import { cubicInOut } from 'svelte/easing';
 	import { title, desc } from '@src/stores.js';
@@ -7,7 +8,7 @@
 	import cont2 from './cont2.svelte';
 	import cont3 from './cont3.svelte';
 	title.set('关于这里');
-	desc.set('没有描述哦');
+	desc.set('一些介绍');
 
 	$: tabs = [
 		{ name: '前瞻', content: cont1 },
@@ -16,20 +17,25 @@
 	];
 	$: activeTab = 0;
 
+	/**
+	 * @type {string | number | NodeJS.Timeout | null | undefined}
+	 */
+	let timeIntervalId;
+
 	const timeInterFn = () => {
-		return setInterval(() => {
+		timeIntervalId = setInterval(() => {
 			activeTab += 1;
 			if (activeTab >= 3) {
 				activeTab = 0;
 			}
-		}, 3000);
+		}, 2000);
 	};
-	let timeIntervalId = timeInterFn();
 
-	/**
-	 * @type {string | number | NodeJS.Timeout | null | undefined}
-	 */
-	let timeTimeoutId = null;
+	$: console.log(activeTab);
+
+	onMount(() => {
+		timeInterFn();
+	});
 </script>
 
 <div class="tabs-wrap">
@@ -39,15 +45,14 @@
 			class:on={idx === activeTab}
 			on:click={() => {
 				activeTab = idx;
-				clearInterval(timeIntervalId);
-
-				if (timeTimeoutId) {
-					clearInterval(timeTimeoutId);
+				
+				if (timeIntervalId !== null) {
+					clearInterval(timeIntervalId);
 				}
 
-				timeTimeoutId = setTimeout(() => {
-					timeIntervalId = timeInterFn();
-				}, 3000);
+				timeIntervalId = setTimeout(() => {
+					timeInterFn();
+				}, 2000);
 			}}
 		>
 			{tab.name}
@@ -57,16 +62,16 @@
 
 <div
 	class="tabs-cont"
-    role="list"
+	role="list"
 	on:mouseenter={() => {
-		if (timeTimeoutId) {
-			clearInterval(timeTimeoutId);
+		if (timeIntervalId !== null) {
+			clearInterval(timeIntervalId);
 		}
 	}}
 	on:mouseleave={() => {
-		timeTimeoutId = setTimeout(() => {
-			timeIntervalId = timeInterFn();
-		}, 3000);
+		timeIntervalId = setTimeout(() => {
+			timeInterFn();
+		}, 2000);
 	}}
 >
 	{#each tabs as tab, idx}
@@ -87,7 +92,7 @@
 </div>
 
 <div class="list-tutorial">
-	<h3 style:--color-theme-2="#333">教程列表</h3>
+	<h3 style:--color-theme-2="#333">文章列表</h3>
 	<ul>
 		{#each data.list as item}
 			<li><a href="/about/{item.href}">{item.tl}</a></li>
