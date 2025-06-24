@@ -1,5 +1,7 @@
 <script>
+    // import { setContext } from 'svelte'; 祖先传值
 	import { afterNavigate } from '$app/navigation';
+	import { headerHover } from '@src/stores.js';
     import { page } from '$app/stores';
     export let title = '标题';
     export let back = true; // 是否显示返回按钮
@@ -13,17 +15,17 @@
         if (history.length > 1) {
             history.back();
         } else {
-            // 如果没有上一页，可设定默认跳转路径
+            // 没有上一页，默认跳转路径
             location.href = '/';
         }
     };
 </script>
 
-<header class="header" id="header">
+<header role="region" class="header" id="header" on:mouseenter={() => headerHover.set(true)} >
     {#if back}
         <button class="back-button" on:click={goBack}>←</button>
     {/if}
-    <h1 class="title">{title}</h1>
+    <h1 class="title" style="padding-left: {back ? '0.83vw' : '3.12vw'};">{title}</h1>
 </header>
 
 <style>
@@ -37,7 +39,6 @@
         z-index: 10;
         padding: 0 16px;
         height: 50px;
-        /* border-bottom: 1px solid #bebebe; */
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
         font-size: 14px;
         background-color: rgba(0,0,0,.8);

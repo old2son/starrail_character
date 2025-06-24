@@ -1,7 +1,7 @@
 <script>
 	import { beforeNavigate, afterNavigate } from '$app/navigation';
 	import './styles.css';
-	import { title, desc } from '@src/stores.js';
+	import { title, desc, headerHover } from '@src/stores.js';
     import Header from '@src/lib/component/header.svelte';
 
 	let hide = true;
@@ -17,6 +17,8 @@
 		else {
 			hide = false;
 		}
+
+		headerHover.set(false);
 	});
 
 	// 刷新页面不触发
@@ -31,7 +33,7 @@
 <Header title={$title} />
 <slot />
 <footer> 
-    <button class="btn-back" class:hide on:click={goBack}>Go Back</button>
+    <button class="btn-back" class:hide on:click={goBack}>返回</button>
 
 	<p class="info-icp" id="icp">
 		<a
@@ -50,8 +52,8 @@
 	.btn-back {
 		position: fixed;
 		left: 50%;
-		bottom: 20px;
-		width: 50vw;
+		bottom: 80px;
+		width: 120px;
 		height: 35px;
 		line-height: 35px;
 		text-align: center;
@@ -70,13 +72,20 @@
 		bottom: 0px;
 		z-index: 2;
 		margin: 0;
+		padding: 10px 0;
 		text-align: center;
-		color: #676767;
-		font-size: 20px;
-		background-color: #3c3c3c;
+		color: #aaa;
+		font-size: 14px;
+		background-color: #000;
 
 		& a {
-			color: #fff;
+			transition: color 0.2s ease-in-out;
+			text-decoration: none;
+			color: #aaa;
+
+			&:hover {
+				color: #fff;
+			}
 		}
 	}
 </style>

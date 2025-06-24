@@ -8,6 +8,7 @@ export async function load() {
 		})),
 		conts: postTutorial.map((item) => ({
 			param: item.path,
+			desc: item.desc,
 			cont: item.content
 		})),
 	};

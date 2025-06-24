@@ -47,37 +47,48 @@
 		})
 	}
 
-	onMount(() => {
-		// getNews();
-		// getWeather();
-		handleCheck();
-    });
+	/** @param {MouseEvent} event */
+	function handleClick(event) {
+		if (event.type === 'click') {
+			handleCheck();
+		}
+	}
+
+	/** @param {KeyboardEvent} event */
+	function handleKeydown(event) {
+		if (event.key === 'Enter') {
+			handleCheck();
+		}
+	}
+
 </script>
 
 <div class="weather">
-	<input type="text" id="city" bind:value={city} placeholder="广州" >
-	<button class="btn" on:click={handleCheck}>查天气</button>
+	<div class="input-wrap">
+		<input type="text" autocomplete="off" id="city" bind:value={city} placeholder="在哪~" on:keydown={handleKeydown}>
+		<button class="btn" on:click={handleClick}>🔍</button>
+	</div>
 	<slot name="desc" />
 </div>
 
 <style>
 	input[id='city'] {
 		display: flex;
-		width: 100%;
 		height: 30px;
 		line-height: 30px;
-		padding: 3px 10px;
+		padding: 20px 10px;
 		margin: 10px auto 0;
 		outline: none;
 		border: 0;
-		border-bottom: 1px solid var(--color-theme-2);
+		text-align: center;
+		border-bottom: 1px solid #bbb;
 		transition: border-bottom 0.3s ease-in-out;
-		color: var(--color-text);
+		color: var(--color-gold);
 		font-size: 20px;
-		background-color: #fff;
+        background-color: transparent;
 
 		&:focus {
-			border-bottom: 1px solid var(--color-theme-1);
+			border-bottom: 1px solid var(--color-gold);
 		}
 
 		&::placeholder {
@@ -87,8 +98,14 @@
 
 	.btn {
 		display: flex;
-		margin-top: 40px;
+		justify-content: center;
+		align-items: center;
+		width: 40px;
+		height: 40px;
+		border-radius: 50%;
+		color: var(--color-gold);
 		font-size: 20px;
+		background-color: hsla(0,0%,100%,.22);
 	}
 
 	.weather {
@@ -96,11 +113,23 @@
 		justify-content: center;
 		align-items: center;
 		flex-wrap: wrap;
-		position: relative;
+		position: fixed;
+		top: 50%;
+		right: 50px;
 		z-index: 2;
 		width: 400px;
-		padding: 40px 0;
+		padding: 15px 20px;
+		margin-top: -150px;
 		border-radius: 8px;
-		background-color: #FFF;
+		transform: translateY(-50%);
+        background-color: rgba(0,0,0,.9);
+
+		& .input-wrap {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			width: 100%;
+		}
 	}
+	
 </style>

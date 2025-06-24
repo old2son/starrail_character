@@ -1,7 +1,8 @@
 <script>
 	export let data;
-	import { title } from '@src/stores.js';
+	import { title, desc } from '@src/stores.js';
 	title.set(data.param);
+	desc.set(data.desc);
 </script>
 
 <div role="article">

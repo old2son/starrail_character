@@ -19,7 +19,6 @@
 </div>
 <svelte:window
 	on:click={(e) => {
-		console.log(e.target);
 		const target = e.target;
 		if (target instanceof HTMLElement && target.classList.contains('js-form-wrap')) {
 			visible = false;

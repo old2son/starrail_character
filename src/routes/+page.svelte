@@ -3,13 +3,17 @@
     import Nav from '@src/lib/component/nav.svelte';
     import Weather from '@src/lib/component/weather.svelte';
     import videoHome from '$lib/videos/home.mp4';
+    import { toast, showToast } from '$lib/store/toast.js';
     import { onMount, onDestroy } from 'svelte';
     import { title, desc } from '@src/stores.js';
+	import { slide } from 'svelte/transition';
+
     title.set('首页'); 
     desc.set('首页描述');
 
     const logged = typeof data.logged === 'boolean' ? data.logged : false;
-    $: city = '广州';
+    
+    $: city = '';
 
     /** @type {{ [key: string]: any }} */
 	let weatherResult;
@@ -21,6 +25,14 @@
 	 * @type {HTMLVideoElement}
 	 */
     let video;
+
+    const weatherMap = [
+        { keyword: '雨', icon: '🌧' },
+        { keyword: '雷', icon: '⛈' },
+        { keyword: '风', icon: '🌬' },
+        { keyword: '晴', icon: '🌞' },
+        { keyword: '云', icon: '☁' }
+    ];
 
     onMount(() => {
         videoInit();
@@ -90,28 +102,57 @@
      */
     // 接收子组件传递过来的数据
     function handleUpdate(event) {
-        weatherResult = event.detail;
+        weatherResult = JSON.parse(JSON.stringify(event.detail));
+
+        if (!weatherResult?.data) {
+            showToast('获取天气失败', 'error');
+            return;
+        }
+ 
+        showToast('获取天气成功', 'success');
+        
+        weatherResult.data.forEach(
+            /** @param {{ weather: string }} weatherData */
+            (weatherData) => {
+
+                for (const { keyword, icon } of weatherMap) {
+                    if (weatherData.weather.includes(keyword)) {
+                        weatherData.weather = icon;
+                    }
+                }
+            }
+        );
     }
+
 
 </script>
 
 <Nav {logged}/>
 <Weather {city} on:update={handleUpdate}>
     <div class="desc" slot="desc">
-        <p class="title">{weatherResult?.city ?? city}天气</p>
         {#if weatherResult?.data}
-            <ul class="info">
-                {#each weatherResult.data as { air_quality, date, temperature, weather, wind }}
-                    <li>{date} {temperature} {air_quality} {weather} {wind}</li>
-                {/each}
-            </ul>
+            <div transition:slide={{duration: 300}}>
+                <p class="title">{weatherResult?.city ?? city}天气</p>
+                <ul class="info">
+                    {#each weatherResult.data as { air_quality, date, temperature, weather, wind }}
+                        <li>{date} {temperature} {air_quality} {weather} {wind}</li>
+                    {/each}
+                </ul>
+            </div>
         {/if}
     </div>
 </Weather>
 
 <svelte:window on:resize={canvasSize} />
 
-<canvas class="canvas" bind:this={canvas}  style="width: 100vw; height: 100vh;" />
+<canvas class="canvas" bind:this={canvas} />
+
+{#if $toast.show}
+	<div class="toast { $toast.type }">
+		{ $toast.message }
+	</div>
+{/if}
+
 
 <style>
     .canvas {
@@ -122,10 +163,15 @@
 
     .desc {
         display: flex;
+        justify-content: center;
         flex-wrap: wrap;
         width: 100%;
+        color: #bfbfbf;
+        font-size: 16px;
 
         & .title {
+            margin-top: 10px;
+            margin-left: -40px;
             flex-basis: 100%;
             text-align: center;
         }
@@ -134,7 +180,11 @@
             flex-basis: 100%;
             padding: 0 20px;
             margin: 0;
+            margin-top: 8px;
+            margin-left: -40px;
+            line-height: 28px;
             list-style: none;
+            text-align: center;
         }
     }
 </style>
