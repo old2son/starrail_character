@@ -7,10 +7,6 @@ settings:
 importers:
 
   .:
-    dependencies:
-      postcss-px-to-viewport:
-        specifier: ^1.1.1
-        version: 1.1.1
     devDependencies:
       '@eslint/compat':
         specifier: ^1.4.0
@@ -51,6 +47,9 @@ importers:
       globals:
         specifier: ^16.5.0
         version: 16.5.0
+      postcss-px-to-viewport-8-plugin:
+        specifier: ^1.2.5
+        version: 1.2.5
       prettier:
         specifier: ^3.6.2
         version: 3.6.2
@@ -1185,8 +1184,8 @@ packages:
       ts-node:
         optional: true
 
-  postcss-px-to-viewport@1.1.1:
-    resolution: {integrity: sha512-2x9oGnBms+e0cYtBJOZdlwrFg/mLR4P1g2IFu7jYKvnqnH/HLhoKyareW2Q/x4sg0BgklHlP1qeWo2oCyPm8FQ==}
+  postcss-px-to-viewport-8-plugin@1.2.5:
+    resolution: {integrity: sha512-+yc69+q/euV7iKh5fGXY6C/lpepmVx2DGFHeYj5BpzIFyBBpdACDjZyrZ8AV0kCg+J0bplBv4ZA1QTzgaK0rGg==}
 
   postcss-safe-parser@7.0.1:
     resolution: {integrity: sha512-0AioNCJZ2DPYz5ABT6bddIqlhgwhpHZ/l65YAYo0BCIn0xiDpsnTHz0gnoTGk0OXZW0JRs+cDwL8u/teRdz+8A==}
@@ -2382,10 +2381,9 @@ snapshots:
     optionalDependencies:
       postcss: 8.5.6
 
-  postcss-px-to-viewport@1.1.1:
+  postcss-px-to-viewport-8-plugin@1.2.5:
     dependencies:
       object-assign: 4.1.1
-      postcss: 8.5.6
 
   postcss-safe-parser@7.0.1(postcss@8.5.6):
     dependencies:
