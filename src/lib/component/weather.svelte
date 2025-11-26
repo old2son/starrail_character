@@ -1,7 +1,7 @@
 <script>
 	import { onMount, createEventDispatcher } from 'svelte';
 	/** @type {string} */
-	export let city;
+    let { city, desc } = $props();
 
 	/** @type {RequestInit} */
 	const requestOptions = {
@@ -9,7 +9,7 @@
 		redirect: 'follow'
 	};
 
-	const dispatch = createEventDispatcher();
+	// const dispatch = createEventDispatcher();
 
 	async function getWeather () {
 		try {
@@ -65,18 +65,19 @@
 
 <div class="weather">
 	<div class="input-wrap">
-		<input type="text" autocomplete="off" id="city" bind:value={city} placeholder="在哪~" on:keydown={handleKeydown}>
-		<button class="btn" on:click={handleClick}>🔍</button>
+		<input type="text" autocomplete="off" id="city" bind:value={city} placeholder="在哪~" onkeydown={handleKeydown}>
+		<button class="btn" onclick={handleClick}>🔍</button>
 	</div>
-	<slot name="desc" />
+	{@render desc?.()}
 </div>
 
 <style>
 	input[id='city'] {
 		display: flex;
+		width: 100%;
 		height: 30px;
 		line-height: 30px;
-		padding: 20px 10px;
+		padding: 0 15px;
 		margin: 10px auto 0;
 		outline: none;
 		border: 0;
@@ -100,8 +101,8 @@
 		display: flex;
 		justify-content: center;
 		align-items: center;
-		width: 40px;
-		height: 40px;
+		width: 45px;
+		height: 35px;
 		border-radius: 50%;
 		color: var(--color-gold);
 		font-size: 20px;
@@ -115,13 +116,13 @@
 		flex-wrap: wrap;
 		position: fixed;
 		top: 50%;
-		right: 50px;
+		left: 50%;
 		z-index: 2;
-		width: 400px;
+		width: 300px;
 		padding: 15px 20px;
-		margin-top: -150px;
+		overflow: hidden;
 		border-radius: 8px;
-		transform: translateY(-50%);
+		transform: translate(-50%, -50%);
         background-color: rgba(0,0,0,.9);
 
 		& .input-wrap {

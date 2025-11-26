@@ -1,17 +1,29 @@
 @import './layout.css';
 
+:root {
+	--color-bg-0: #0f1423;
+	--color-bg-1: #15559a;
+	--color-bg-2: #2474b5;
+	--color-theme-1: #2e317c;
+	--color-theme-2: #8a988e;
+	--color-text: rgba(0, 0, 0, 0.7);
+	--color-gold: #e1b066;
+	font-family: var(--font-body);
+	color: var(--color-text);
+}
+
 .toast {
 	position: fixed;
 	top: 50%;
 	left: 50%;
-	transform: translateX(-50%) translateY(-50%);
+	z-index: 10;
 	padding: 12px 24px;
 	border-radius: 6px;
-	font-size: 14px;
-	color: white;
 	box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
-	z-index: 10;
+	transform: translateX(-50%) translateY(-50%);
 	animation: fadeInOut 2s ease-in-out forwards;
+	color: white;
+	font-size: 14px;
 }
 
 /* 成功类型 */
