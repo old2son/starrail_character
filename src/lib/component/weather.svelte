@@ -1,4 +1,5 @@
 <script>
+	import { PUBLIC_API_WEATHER_KEY } from '$env/static/public';
 	import { onMount } from 'svelte';
 	/**
 	 * @typedef Props
@@ -18,13 +19,9 @@
 
 	async function getWeather() {
 		try {
-			const weatherRes = await fetch('/weatherApi?city=' + city, requestOptions);
+			const weatherRes = await fetch(`/weatherApi/current.json?q=${city}&key=${PUBLIC_API_WEATHER_KEY}`, requestOptions);
 			const weatherResult = await weatherRes.json();
-			if (weatherResult.code === 200) {
-				return Promise.resolve(weatherResult);
-			} else {
-				return Promise.reject('获取天气失败');
-			}
+			return Promise.resolve(weatherResult);
 		} catch (err) {
 			console.error('Fetch error:', err);
 		}
@@ -43,7 +40,7 @@
 	function handleCheck() {
 		getWeather()
 			.then((weatherRes) => {
-				updated?.(weatherRes.data);
+				updated?.(weatherRes.current);
 			})
 			.catch((err) => {
 				updated?.(err);

@@ -35,7 +35,7 @@
 <Header title={$title} />
 <slot />
 <footer>
-	<button class="btn-back" class:hide on:click={goBack}>返回</button>
+	<button class="btn-back" class:hide onclick={goBack}>返回</button>
 
 	<p class="info-icp" id="icp">
 		<a

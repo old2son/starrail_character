@@ -14,12 +14,14 @@ export default defineConfig({
 		port: 8080,
 		proxy: {
 			'/newsApi': {
-				target: 'https://api.vvhan.com/api/hotlist/pengPai',
+				// todo: 替换新闻api地址
+				target: 'https://api.weatherapi.com/v1/',
 				changeOrigin: true,
 				rewrite: (path) => path.replace(/^\/newsApi/, '')
 			},
 			'/weatherApi': {
-				target: 'https://v2.xxapi.cn/api/weather',
+				// https://www.weatherapi.com/
+				target: 'https://api.weatherapi.com/v1/',
 				changeOrigin: true,
 				rewrite: (path) => path.replace(/^\/weatherApi/, '')
 			}

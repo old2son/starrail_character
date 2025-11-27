@@ -1,5 +1,4 @@
 <script>
-	export let data;
 	import Nav from '@src/lib/component/nav.svelte';
 	import Weather from '@src/lib/component/weather.svelte';
 	// import videoHome from '$lib/videos/home.mp4';
@@ -8,15 +7,17 @@
 	import { title, desc } from '@src/stores.js';
 	import { slide } from 'svelte/transition';
 
+	let { data } = $props();
+
 	title.set('首页');
 	desc.set('首页描述');
 
 	const logged = typeof data.logged === 'boolean' ? data.logged : false;
 
-	$: city = '';
+	let city = $state('');
 
-	/** @type {{ [key: string]: any }} */
-	let weatherResult;
+	/** @type {{ [key: string]: any } | null} */
+	let weatherResult = $state(null);
 	/**
 	 * @type {HTMLCanvasElement}
 	 */
@@ -101,9 +102,10 @@
 	 */
 	// 接收子组件传递过来的数据
 	function handleUpdate(event) {
+		console.log(event)
 		weatherResult = JSON.parse(JSON.stringify(event));
 
-		if (!weatherResult?.data) {
+		if (!weatherResult?.location) {
 			showToast('获取天气失败', 'error');
 			return;
 		}

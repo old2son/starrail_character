@@ -196,7 +196,7 @@
 	<input type="range" bind:value={pos.x} min="-100" step="0.1" max="100" on:input={()=>{Model.setCamera(pos, look)}}>x：{pos.x}
 	<input type="range" bind:value={pos.y} min="-100" step="0.1" max="100" on:input={()=>{Model.setCamera(pos, look)}}>y：{pos.y}
 	<input type="range" bind:value={pos.z} min="-100" step="0.1" max="100" on:input={()=>{Model.setCamera(pos, look)}}>z：{pos.z}
-	<button on:click={()=>{
+	<button onclick={()=>{
 		pos.x = 0;
 		pos.y = 0;
 		pos.z = 0;
@@ -216,7 +216,7 @@
 		Model.setCamera(pos, look);
 		Model.setControl(look);
 	}}>z：{look.z}
-	<button on:click={()=>{
+	<button onclick={()=>{
 		look.x = 0;
 		look.y = 0;
 		look.z = 0;

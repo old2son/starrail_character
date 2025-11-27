@@ -3,7 +3,7 @@
 	import { afterNavigate } from '$app/navigation';
 	import { headerHover } from '@src/stores.js';
 	import { page } from '$app/state';
-    let { title = '标题', back = true } = $props();
+	let { title = '标题', back = true } = $props();
 
 	let isShow = $state(false);
 
@@ -20,16 +20,28 @@
 			location.href = '/';
 		}
 	};
+
 </script>
 
 <header role="region" class="header" id="header" onmouseenter={() => headerHover.set(true)}>
 	{#if back}
 		<button class="back-button" onclick={goBack}>←</button>
 	{/if}
-	<h1 class="title">{title}</h1>
 
-	<!-- <button  on:click={() => headerHover.set(true)} class="cursor-pointer md:hidden text-gray-700 focus:outline-none"> -->
-	<button onclick={() => isShow = !isShow} class="c cursor-pointer md:hidden text-amber-800 focus:outline-none">
+	<div class="flex items-center justify-between w-full">
+		<h1 class="title">{title}</h1>
+
+		<div class="hidden md:flex space-x-6">
+			<a href="/tools" class="text-[#bebebe] hover:text-black"> 工具 </a>
+			<a href="/about" class="text-[#bebebe] hover:text-black"> 关于 </a>
+		</div>
+	</div>
+
+	<!-- <button onclick={() => headerHover.set(true)} class="cursor-pointer md:hidden text-gray-700 focus:outline-none"> -->
+	<button
+		onclick={() => (isShow = !isShow)}
+		class="c cursor-pointer md:hidden text-[#bebebe] focus:outline-none"
+	>
 		<!-- 汉堡菜单 -->
 		<svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2">
 			<path d="M4 6h16M4 12h16M4 18h16" />
