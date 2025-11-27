@@ -105,7 +105,7 @@
 		console.log(event)
 		weatherResult = JSON.parse(JSON.stringify(event));
 
-		if (!weatherResult?.location) {
+		if (!weatherResult) {
 			showToast('获取天气失败', 'error');
 			return;
 		}
@@ -129,7 +129,7 @@
 <Weather {city} updated={handleUpdate}>
 	{#snippet desc()}
 		<div class="desc">
-			{#if weatherResult?.data}
+			{#if weatherResult}
 				<div transition:slide={{ duration: 300 }}>
 					<p class="title">{weatherResult?.city ?? city}天气</p>
 					<ul class="info">

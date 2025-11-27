@@ -15,6 +15,7 @@ export default defineConfig({
 		proxy: {
 			'/newsApi': {
 				// todo: 替换新闻api地址
+				// https://newsapi.org/
 				target: 'https://api.weatherapi.com/v1/',
 				changeOrigin: true,
 				rewrite: (path) => path.replace(/^\/newsApi/, '')
