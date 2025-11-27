@@ -1,7 +1,14 @@
 <script>
-	import { onMount, createEventDispatcher } from 'svelte';
-	/** @type {string} */
-    let { city, desc } = $props();
+	import { onMount } from 'svelte';
+	/**
+	 * @typedef Props
+	 * @property {string} city
+	 * @property {() => any=} desc
+	 * @property {(data: any) => void=} updated
+	 */
+
+	/** @type {Props} */
+	let { city, desc, updated } = $props();
 
 	/** @type {RequestInit} */
 	const requestOptions = {
@@ -9,42 +16,38 @@
 		redirect: 'follow'
 	};
 
-	// const dispatch = createEventDispatcher();
-
-	async function getWeather () {
+	async function getWeather() {
 		try {
 			const weatherRes = await fetch('/weatherApi?city=' + city, requestOptions);
 			const weatherResult = await weatherRes.json();
 			if (weatherResult.code === 200) {
 				return Promise.resolve(weatherResult);
-			}
-			else {
+			} else {
 				return Promise.reject('获取天气失败');
 			}
-		}
-		catch (err) {
+		} catch (err) {
 			console.error('Fetch error:', err);
 		}
 	}
 
-	async function getNews () {
+	async function getNews() {
 		try {
 			const newsRes = await fetch('/newsApi', requestOptions);
 			const newsResult = await newsRes.text();
-		}
-		catch (err) {
+		} catch (err) {
 			console.error('Fetch error:', err);
 		}
 	}
 
 	// 子组件传父组件
 	function handleCheck() {
-		getWeather().then((weatherRes) => {
-			dispatch('update', weatherRes.data);
-		})
-		.catch((err) => {
-			dispatch('update', err);
-		})
+		getWeather()
+			.then((weatherRes) => {
+				updated?.(weatherRes.data);
+			})
+			.catch((err) => {
+				updated?.(err);
+			});
 	}
 
 	/** @param {MouseEvent} event */
@@ -60,12 +63,18 @@
 			handleCheck();
 		}
 	}
-
 </script>
 
 <div class="weather">
 	<div class="input-wrap">
-		<input type="text" autocomplete="off" id="city" bind:value={city} placeholder="在哪~" onkeydown={handleKeydown}>
+		<input
+			type="text"
+			autocomplete="off"
+			id="city"
+			bind:value={city}
+			placeholder="在哪~"
+			onkeydown={handleKeydown}
+		/>
 		<button class="btn" onclick={handleClick}>🔍</button>
 	</div>
 	{@render desc?.()}
@@ -86,7 +95,7 @@
 		transition: border-bottom 0.3s ease-in-out;
 		color: var(--color-gold);
 		font-size: 20px;
-        background-color: transparent;
+		background-color: transparent;
 
 		&:focus {
 			border-bottom: 1px solid var(--color-gold);
@@ -106,7 +115,7 @@
 		border-radius: 50%;
 		color: var(--color-gold);
 		font-size: 20px;
-		background-color: hsla(0,0%,100%,.22);
+		background-color: hsla(0, 0%, 100%, 0.22);
 	}
 
 	.weather {
@@ -123,7 +132,7 @@
 		overflow: hidden;
 		border-radius: 8px;
 		transform: translate(-50%, -50%);
-        background-color: rgba(0,0,0,.9);
+		background-color: rgba(0, 0, 0, 0.9);
 
 		& .input-wrap {
 			display: flex;
@@ -132,5 +141,4 @@
 			width: 100%;
 		}
 	}
-	
 </style>

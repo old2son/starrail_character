@@ -101,7 +101,7 @@
 	 */
 	// 接收子组件传递过来的数据
 	function handleUpdate(event) {
-		weatherResult = JSON.parse(JSON.stringify(event.detail));
+		weatherResult = JSON.parse(JSON.stringify(event));
 
 		if (!weatherResult?.data) {
 			showToast('获取天气失败', 'error');
@@ -124,7 +124,7 @@
 </script>
 
 <Nav {logged} />
-<Weather {city} on:update={handleUpdate}>
+<Weather {city} updated={handleUpdate}>
 	{#snippet desc()}
 		<div class="desc">
 			{#if weatherResult?.data}
