@@ -191,11 +191,11 @@
 	<div in:fade out:fade class="mask">已加载 {progress} MB</div>
 {/if}
 
-<div class="range-wrap" on:mouseenter={()=>{isMove = true;}} on:mouseleave={()=>{isMove = false;}} role="form">
+<div class="range-wrap" onmouseenter={()=>{isMove = true;}} onmouseleave={()=>{isMove = false;}} role="form">
 	<h2>set camera position：</h2>
-	<input type="range" bind:value={pos.x} min="-100" step="0.1" max="100" on:input={()=>{Model.setCamera(pos, look)}}>x：{pos.x}
-	<input type="range" bind:value={pos.y} min="-100" step="0.1" max="100" on:input={()=>{Model.setCamera(pos, look)}}>y：{pos.y}
-	<input type="range" bind:value={pos.z} min="-100" step="0.1" max="100" on:input={()=>{Model.setCamera(pos, look)}}>z：{pos.z}
+	<input type="range" bind:value={pos.x} min="-100" step="0.1" max="100" oninput={()=>{Model.setCamera(pos, look)}}>x：{pos.x}
+	<input type="range" bind:value={pos.y} min="-100" step="0.1" max="100" oninput={()=>{Model.setCamera(pos, look)}}>y：{pos.y}
+	<input type="range" bind:value={pos.z} min="-100" step="0.1" max="100" oninput={()=>{Model.setCamera(pos, look)}}>z：{pos.z}
 	<button onclick={()=>{
 		pos.x = 0;
 		pos.y = 0;
@@ -204,15 +204,15 @@
 	}}>reset position zero</button>
 
 	<h2>set camera look at：</h2>
-	<input type="range" bind:value={look.x} min="-100" step="0.1" max="100" on:input={()=>{
+	<input type="range" bind:value={look.x} min="-100" step="0.1" max="100" oninput={()=>{
 		Model.setCamera(pos, look);
 		Model.setControl(look);
 	}}>x：{look.x}
-	<input type="range" bind:value={look.y} min="-100" step="0.1" max="100" on:input={()=>{
+	<input type="range" bind:value={look.y} min="-100" step="0.1" max="100" oninput={()=>{
 		Model.setCamera(pos, look);
 		Model.setControl(look);
 	}}>y：{look.y}
-	<input type="range" bind:value={look.z} min="-100" step="0.1" max="100" on:input={()=>{
+	<input type="range" bind:value={look.z} min="-100" step="0.1" max="100" oninput={()=>{
 		Model.setCamera(pos, look);
 		Model.setControl(look);
 	}}>z：{look.z}

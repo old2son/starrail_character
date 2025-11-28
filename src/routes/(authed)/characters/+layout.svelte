@@ -9,7 +9,7 @@
 		<a
 			href="/characters/{name}"
 			data-id={id}
-			on:mouseenter={() => {
+			onmouseenter={() => {
 				if (get(characterId) !== id) {
 					characterId.set(id);
 				}

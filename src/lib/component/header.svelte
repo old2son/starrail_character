@@ -20,10 +20,29 @@
 			location.href = '/';
 		}
 	};
-
 </script>
 
-<header role="region" class="header" id="header" onmouseenter={() => headerHover.set(true)}>
+<header
+	role="region"
+	class="header"
+	id="header"
+	onmouseenter={() => headerHover.set(true)}
+	onmouseleave={(e) => {
+		const target = e.relatedTarget;
+		if (!target || !(target instanceof HTMLElement)) {
+			headerHover.set(false);
+			return;
+		}
+
+		if (
+			target.closest('nav') // 检查是否在 NAV 内
+		) {
+			return;
+		}
+
+		headerHover.set(false);
+	}}
+>
 	{#if back}
 		<button class="back-button" onclick={goBack}>←</button>
 	{/if}
