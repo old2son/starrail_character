@@ -102,7 +102,7 @@
 	 */
 	// 接收子组件传递过来的数据
 	function handleUpdate(event) {
-		console.log(event)
+		console.log(event);
 		weatherResult = JSON.parse(JSON.stringify(event));
 
 		if (!weatherResult) {
@@ -128,11 +128,11 @@
 <Nav {logged} />
 <Weather {city} updated={handleUpdate}>
 	{#snippet desc()}
-		<div class="desc">
+		<div class="flex justify-center flex-wrap w-full text-gray-400 text-base">
 			{#if weatherResult}
 				<div transition:slide={{ duration: 300 }}>
-					<p class="title">{weatherResult?.city ?? city}天气</p>
-					<ul class="info">
+					<p class="mt-2.5 -ml-10 flex-basis-full text-center">{weatherResult?.city ?? city}天气</p>
+					<ul class="flex-basis-full px-5 m-0 mt-2 -ml-10 leading-7 list-none text-center">
 						{#each weatherResult.data as { air_quality, date, temperature, weather, wind }}
 							<li>{date} {temperature} {air_quality} {weather} {wind}</li>
 						{/each}
@@ -145,45 +145,19 @@
 
 <svelte:window on:resize={canvasSize} />
 
-<canvas class="canvas" bind:this={canvas}></canvas>
+<canvas class="fixed top-0 z-0" bind:this={canvas}></canvas>
 
 {#if $toast.show}
-	<div class="toast {$toast.type}">
+	<div
+		class="fixed top-1/2 left-1/2 z-30 px-6 py-3 rounded-lg shadow-lg -translate-x-1/2 -translate-y-1/2 text-white text-sm animate-fade-in-out {$toast.type ===
+		'success'
+			? 'bg-green-500'
+			: $toast.type === 'error'
+				? 'bg-red-500'
+				: $toast.type === 'info'
+					? 'bg-blue-500'
+					: 'bg-orange-500'}"
+	>
 		{$toast.message}
 	</div>
 {/if}
-
-<style>
-	.canvas {
-		position: fixed;
-		top: 0;
-		z-index: 1;
-	}
-
-	.desc {
-		display: flex;
-		justify-content: center;
-		flex-wrap: wrap;
-		width: 100%;
-		color: #bfbfbf;
-		font-size: 16px;
-
-		& .title {
-			margin-top: 10px;
-			margin-left: -40px;
-			flex-basis: 100%;
-			text-align: center;
-		}
-
-		& .info {
-			flex-basis: 100%;
-			padding: 0 20px;
-			margin: 0;
-			margin-top: 8px;
-			margin-left: -40px;
-			line-height: 28px;
-			list-style: none;
-			text-align: center;
-		}
-	}
-</style>

@@ -35,65 +35,15 @@
 <Header title={$title} />
 <slot />
 <footer>
-	<button class="btn-back" class:hide onclick={goBack}>返回</button>
+	<button class="fixed left-1/2 bottom-20 w-30 h-8.75 leading-8.75 text-center border-0 rounded-[40px] cursor-pointer -translate-x-1/2 text-white bg-gray-500 {hide ? 'hidden' : ''}" onclick={goBack}>返回</button>
 
-	<p class="info-icp" id="icp">
+	<p class="fixed left-0 right-0 bottom-0 z-20 m-0 py-2.5 text-center text-gray-400 text-sm bg-black" id="icp">
 		<a
 			href="https://beian.mps.gov.cn/#/query/webSearch?code=61011302001964"
 			rel="noreferrer"
-			target="_blank">粤ICP备2025430656号-1</a
+			target="_blank"
+			class="transition-colors duration-200 ease-in-out no-underline text-gray-400 hover:text-white">粤ICP备2025430656号-1</a
 		>
 	</p>
 </footer>
 
-<style>
-	/* :global {
-		body {
-			max-width: 768px;
-		}
-	} */
-
-	.hide {
-		display: none;
-	}
-
-	.btn-back {
-		position: fixed;
-		left: 50%;
-		bottom: 80px;
-		width: 120px;
-		height: 35px;
-		line-height: 35px;
-		text-align: center;
-		border: 0;
-		border-radius: 40px;
-		cursor: pointer;
-		transform: translateX(-50%);
-		color: #fff;
-		background-color: grey;
-	}
-
-	.info-icp {
-		position: fixed;
-		left: 0;
-		right: 0;
-		bottom: 0px;
-		z-index: 2;
-		margin: 0;
-		padding: 10px 0;
-		text-align: center;
-		color: #aaa;
-		font-size: 14px;
-		background-color: #000;
-
-		& a {
-			transition: color 0.2s ease-in-out;
-			text-decoration: none;
-			color: #aaa;
-
-			&:hover {
-				color: #fff;
-			}
-		}
-	}
-</style>

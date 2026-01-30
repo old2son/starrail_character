@@ -9,18 +9,6 @@
 
 	const tabs = [
 		{
-			id: 1,
-			name: '首页',
-			href: '/',
-			show: true
-		},
-		{
-			id: 2,
-			name: '关于',
-			href: '/about',
-			show: true
-		},
-		{
 			id: 3,
 			name: '角色',
 			href: '/characters',
@@ -35,7 +23,7 @@
 		},
 		{
 			id: 5,
-			name: '登录',
+			name: '小窝这块',
 			href: '/login',
 			show: true,
 			isAuth: false
@@ -44,39 +32,22 @@
 </script>
 
 {#if $headerHover}
-	<nav transition:slide={{duration: 300}} onmouseleave={() => headerHover.set(false)}>
+	<nav 
+		transition:slide={{duration: 300}} 
+		onmouseleave={() => headerHover.set(false)}
+		class="md:hidden flex justify-around relative z-20 px-2 my-0 leading-10 overflow-hidden bg-black/80"
+	>
 		{#each tabs as { name, href, show, isAuth }, index}
 			<!-- true 表示已登录，false 表示未登录，undefined 表示无需登录  -->
 			{#if show && (isAuth === undefined || isAuth === logged)}
-				<a class:active={page.url.pathname === href} {href}>{name}</a>
+				<a 
+					href={href} 
+					class="px-5 border-b-2 border-transparent no-underline text-yellow-600 text-sm transition-colors {page.url.pathname === href ? 'border-yellow-600' : 'hover:border-yellow-600'}"
+				>
+					{name}
+				</a>
 			{/if}
 		{/each}
 	</nav>
 {/if}
 
-<style>
-	nav {
-		display: flex;
-		justify-content: space-around;
-		position: relative;
-		z-index: 2;
-		padding: 0 8px;
-		margin: 0px 0px;
-		line-height: 40px;
-		overflow: hidden;
-		background-color: rgba(0, 0, 0, 0.8);
-
-		& a {
-			padding: 0 20px;
-			border-bottom: 3px solid transparent;
-			text-decoration: none;
-			color: var(--color-gold);
-			font-size: 14px;
-		}
-
-		& .active,
-		& a:hover {
-			border-color: var(--color-gold);
-		}
-	}
-</style>

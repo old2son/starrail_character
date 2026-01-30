@@ -62,8 +62,8 @@
 	}
 </script>
 
-<div class="weather">
-	<div class="input-wrap">
+<div class="fixed top-1/2 left-1/2 z-20 w-72 sm:w-80 p-4 overflow-hidden rounded-lg -translate-x-1/2 -translate-y-1/2 bg-black/90 flex justify-center items-center flex-wrap">
+	<div class="flex justify-center items-center w-full">
 		<input
 			type="text"
 			autocomplete="off"
@@ -71,71 +71,10 @@
 			bind:value={city}
 			placeholder="在哪~"
 			onkeydown={handleKeydown}
+			class="flex w-full h-7.5 leading-7.5 px-4 mx-auto mt-2.5 outline-none border-0 text-center border-b border-gray-400 transition-colors duration-300 ease-in-out text-yellow-600 text-xl bg-transparent focus:border-yellow-600 placeholder-gray-400"
 		/>
-		<button class="btn" onclick={handleClick}>🔍</button>
+		<button class="flex justify-center items-center w-11 h-8.75 rounded-full text-yellow-600 text-xl bg-white/22" onclick={handleClick}>🔍</button>
 	</div>
 	{@render desc?.()}
 </div>
 
-<style>
-	input[id='city'] {
-		display: flex;
-		width: 100%;
-		height: 30px;
-		line-height: 30px;
-		padding: 0 15px;
-		margin: 10px auto 0;
-		outline: none;
-		border: 0;
-		text-align: center;
-		border-bottom: 1px solid #bbb;
-		transition: border-bottom 0.3s ease-in-out;
-		color: var(--color-gold);
-		font-size: 20px;
-		background-color: transparent;
-
-		&:focus {
-			border-bottom: 1px solid var(--color-gold);
-		}
-
-		&::placeholder {
-			color: var(--color-theme-2);
-		}
-	}
-
-	.btn {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		width: 45px;
-		height: 35px;
-		border-radius: 50%;
-		color: var(--color-gold);
-		font-size: 20px;
-		background-color: hsla(0, 0%, 100%, 0.22);
-	}
-
-	.weather {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		flex-wrap: wrap;
-		position: fixed;
-		top: 50%;
-		left: 50%;
-		z-index: 2;
-		width: 300px;
-		padding: 15px 20px;
-		overflow: hidden;
-		border-radius: 8px;
-		transform: translate(-50%, -50%);
-		background-color: rgba(0, 0, 0, 0.9);
-
-		& .input-wrap {
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			width: 100%;
-		}
-	}
-</style>
