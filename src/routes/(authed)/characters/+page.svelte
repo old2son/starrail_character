@@ -36,12 +36,19 @@
 <div class="page-characters">
 	{#if Object.keys($characterActive).length}
 		<Cards>
-			<!-- static 的图片直接直接根目录路径 -->
-			<div slot="header" class="avatar-wrap">
-				<img src="/images/{character.name}.jpg" alt={character.cName} />
-			</div>
-			<div>{character.cName}</div>
-			<div slot="footer">{@html character.cont}</div>
+			{#snippet header()}
+				<div class="avatar-wrap">
+					<img src="/images/{character.name}.jpg" alt={character.cName} />
+				</div>
+			{/snippet}
+
+			{#snippet children()}
+				<div>{character.cName}</div>
+			{/snippet}
+
+			{#snippet footer()}
+				<div>{@html character.cont}</div>
+			{/snippet}
 		</Cards>
 	{:else}
 		请选择角色

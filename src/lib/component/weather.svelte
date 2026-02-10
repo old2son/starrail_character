@@ -4,12 +4,12 @@
 	/**
 	 * @typedef Props
 	 * @property {string} city
-	 * @property {() => any=} desc
+	 * @property {() => any=} descSlot
 	 * @property {(data: any) => void=} updated
 	 */
 
 	/** @type {Props} */
-	let { city, desc, updated } = $props();
+	let { city, descSlot, updated } = $props();
 
 	/** @type {RequestInit} */
 	const requestOptions = {
@@ -75,6 +75,6 @@
 		/>
 		<button class="flex justify-center items-center w-11 h-8.75 rounded-full text-yellow-600 text-xl bg-white/22" onclick={handleClick}>🔍</button>
 	</div>
-	{@render desc?.()}
+	{@render descSlot?.()}
 </div>
 

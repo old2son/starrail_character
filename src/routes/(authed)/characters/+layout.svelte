@@ -2,6 +2,8 @@
 	import { get } from 'svelte/store';
 	import { character } from './character.js';
 	import { characterId } from '@src/stores.js';
+
+	let { children } = $props();
 </script>
 
 <nav>
@@ -18,7 +20,7 @@
 	{/each}
 </nav>
 
-<slot />
+{@render children?.()}
 
 <style>
 	nav {

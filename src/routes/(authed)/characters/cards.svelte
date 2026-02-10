@@ -1,16 +1,16 @@
 <script>
-    
+    let { header, children, footer } = $props();
 </script>
 
 <div class="card">
     <div class="header">
-        <slot name="header" />
+        {@render header?.()}
     </div>
     <div class="tl">
-        <slot />
+        {@render children?.()}
     </div>
     <div class="cont">
-        <slot name="footer" />
+        {@render footer?.()}
     </div>
 </div>
 

@@ -27,6 +27,12 @@
 	 */
 	let video;
 
+	let videoOffsetX = $state(0);
+	let videoOffsetY = $state(0);
+	let isDragging = $state(false);
+	let dragStartX = $state(0);
+	let dragStartY = $state(0);
+
 	const weatherMap = [
 		{ keyword: '雨', icon: '🌧' },
 		{ keyword: '雷', icon: '⛈' },
@@ -47,7 +53,7 @@
 		video.muted = true;
 		video.autoplay = true;
 		video.loop = true;
-		// video.play();
+		video.play();
 	};
 
 	const canvasSize = () => {
@@ -93,8 +99,46 @@
 			sy = (vh - sh) / 0.85;
 		}
 
-		ctx.drawImage(video, sx, sy, sw, sh, 0, 0, cw, ch);
-		// requestAnimationFrame(draw);
+		ctx.drawImage(video, sx, sy, sw, sh, videoOffsetX, videoOffsetY, cw, ch);
+		requestAnimationFrame(draw);
+	};
+
+	// Drag event handlers
+	const handleMouseDown = (/** @type {MouseEvent} */ e) => {
+		isDragging = true;
+		dragStartX = e.clientX - videoOffsetX;
+		dragStartY = e.clientY - videoOffsetY;
+	};
+
+	const handleMouseMove = (/** @type {MouseEvent} */ e) => {
+		if (!isDragging) return;
+		
+		videoOffsetX = e.clientX - dragStartX;
+		videoOffsetY = e.clientY - dragStartY;
+	};
+
+	const handleMouseUp = () => {
+		isDragging = false;
+	};
+
+	// Touch event handlers for mobile
+	const handleTouchStart = (/** @type {TouchEvent} */ e) => {
+		const touch = e.touches[0];
+		isDragging = true;
+		dragStartX = touch.clientX - videoOffsetX;
+		dragStartY = touch.clientY - videoOffsetY;
+	};
+
+	const handleTouchMove = (/** @type {TouchEvent} */ e) => {
+		if (!isDragging) return;
+		
+		const touch = e.touches[0];
+		videoOffsetX = touch.clientX - dragStartX;
+		videoOffsetY = touch.clientY - dragStartY;
+	};
+
+	const handleTouchEnd = () => {
+		isDragging = false;
 	};
 
 	/**
@@ -127,7 +171,7 @@
 
 <Nav {logged} />
 <Weather {city} updated={handleUpdate}>
-	{#snippet desc()}
+	{#snippet descSlot()}
 		<div class="flex justify-center flex-wrap w-full text-gray-400 text-base">
 			{#if weatherResult}
 				<div transition:slide={{ duration: 300 }}>
@@ -143,9 +187,14 @@
 	{/snippet}
 </Weather>
 
-<svelte:window on:resize={canvasSize} />
+<svelte:window on:resize={canvasSize} on:mousemove={handleMouseMove} on:mouseup={handleMouseUp} on:touchmove={handleTouchMove} on:touchend={handleTouchEnd} />
 
-<canvas class="fixed top-0 z-0" bind:this={canvas}></canvas>
+<canvas 
+	class="fixed top-0 z-0 cursor-move" 
+	bind:this={canvas}
+	onmousedown={handleMouseDown}
+	ontouchstart={handleTouchStart}
+></canvas>
 
 {#if $toast.show}
 	<div
