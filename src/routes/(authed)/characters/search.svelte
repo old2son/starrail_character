@@ -1,14 +1,12 @@
 <script>
-	/**
-	 * @type {any[]}
-	 */
-	export let data;
-	
-	let search = '';
+	let { data, item } = $props();
 
-	$: filterFn = (/** @type {{ source: string; }} */ item) => {
-		return item.source.includes(search);
-	};
+	let search = $state('');
+
+	let filtered = $derived(
+		data.filter((/** @type {{ source: string; }} */ item) => item.source.includes(search))
+	);
+	
 </script>
 
 <li class="li-input">
@@ -17,8 +15,8 @@
 	</label>
 </li>
 
-{#each data.filter(filterFn) as item}
-	<slot {item} />
+{#each filtered as fitItem}
+	{@render item(fitItem)}
 {/each}
 
 <style>

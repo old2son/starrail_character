@@ -1,11 +1,9 @@
 <script>
-	/**
-	 * @type {boolean}
-	 */
-	export let logged;
 	import { headerHover } from '@src/stores.js';
 	import { page } from '$app/state';
 	import { slide } from 'svelte/transition';
+
+	let { logged } = $props();
 
 	const tabs = [
 		{
