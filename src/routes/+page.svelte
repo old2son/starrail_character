@@ -82,7 +82,7 @@
 		}
 
 		ctx.drawImage(video, sx, sy, sw, sh, videoOffsetX, videoOffsetY, cw, ch);
-		// requestAnimationFrame(draw);
+		requestAnimationFrame(draw);
 	};
 
 	/**
