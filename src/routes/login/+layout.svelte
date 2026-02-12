@@ -2,7 +2,7 @@
 	let { children } = $props();
 </script>
 
-<div class="animated-gradient min-h-lvh">
+<div class="animated-gradient">
 	{@render children?.()}
 </div>
 

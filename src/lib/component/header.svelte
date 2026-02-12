@@ -1,9 +1,10 @@
 <script>
 	// import { setContext } from 'svelte'; 祖先传值
+	import Nav from '@src/lib/component/nav.svelte';
 	import { afterNavigate } from '$app/navigation';
 	import { headerHover, isMobile } from '@src/stores.js';
 	import { page } from '$app/state';
-	let { title = '标题', back = true } = $props();
+	let { title = '标题', back = true, logged = false } = $props();
 
 	const tabs = [
 		{
@@ -47,7 +48,7 @@
 
 <header
 	role="region"
-	class="flex items-center relative top-0 left-0 right-0 z-50 px-4 h-12.5 shadow-md text-sm bg-black/80"
+	class="flex items-center fixed top-0 left-0 right-0 z-50 px-4 h-12.5 shadow-md text-sm bg-black/80"
 	id="header"
 	onmouseenter={() => {
 		if ($isMobile) return;
@@ -74,6 +75,9 @@
 			>←</button
 		>
 	{/if}
+
+	<Nav {logged} />
+
 
 	<div class="flex items-center justify-between w-full">
 		<h1 class="m-0 cursor-pointer text-gray-400 text-xl font-bold">{title}</h1>

@@ -3,7 +3,7 @@ import { PASSPHRASE } from '$env/static/private';
 
 /**
  * @param {any} cookies
- * 
+ *
  */
 export function load({ cookies }) {
 	if (cookies.get('logged_in')) {
@@ -14,7 +14,7 @@ export function load({ cookies }) {
 /**
  * @param {Object} params
  * @param {import('@sveltejs/kit').Cookies} params.cookies
- * @param {Request} params.request 
+ * @param {Request} params.request
  */
 export const actions = {
 	default: async ({ request, cookies, url }) => {
@@ -29,6 +29,12 @@ export const actions = {
 
 			const redirectTo = url.searchParams.get('redirectTo') ?? '/';
 			throw redirect(303, redirectTo);
+
+			// 延迟重定向
+			// return {
+			// 	success: true,
+			// 	incorrect: false
+			// };
 		}
 
 		return fail(403, {

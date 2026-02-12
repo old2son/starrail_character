@@ -1,19 +1,10 @@
 <script>
-	import Nav from '@src/lib/component/nav.svelte';
 	import Weather from '@src/lib/component/weather.svelte';
 	// import videoHome from '$lib/videos/home.mp4';
 	import { toast, showToast } from '$lib/store/toast.js';
-	import { onMount, onDestroy } from 'svelte';
 	import { title, desc } from '@src/stores.js';
 	import { slide } from 'svelte/transition';
 
-	let { data } = $props();
-
-	title.set('首页');
-	desc.set('首页描述');
-
-	const logged = typeof data.logged === 'boolean' ? data.logged : false;
-	
 	let city = $state('');
 
 	/** @type {{ [key: string]: any } | null} */
@@ -37,12 +28,6 @@
 		{ keyword: '晴', icon: '🌞' },
 		{ keyword: '云', icon: '☁' }
 	];
-
-	onMount(() => {
-		videoInit();
-		canvasSize();
-		draw();
-	});
 
 	const videoInit = () => {
 		video = document.createElement('video');
@@ -126,9 +111,18 @@
 			}
 		);
 	}
+
+	// 代指 onMount 生命周期
+	$effect(() => {
+		videoInit();
+		canvasSize();
+		draw();
+	});
+
+	title.set('首页');
+	desc.set('首页描述');
 </script>
 
-<Nav {logged} />
 <Weather {city} updated={handleUpdate}>
 	{#snippet descSlot()}
 		<div class="flex justify-center flex-wrap w-full text-gray-400 text-base">
@@ -146,12 +140,9 @@
 	{/snippet}
 </Weather>
 
-<svelte:window on:resize={canvasSize} />
+<svelte:window onresize={canvasSize} />
 
-<canvas 
-	class="fixed top-0 z-0" 
-	bind:this={canvas}
-></canvas>
+<canvas class="fixed top-0 z-0" bind:this={canvas}></canvas>
 
 {#if $toast.show}
 	<div
