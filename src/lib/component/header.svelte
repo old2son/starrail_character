@@ -5,6 +5,29 @@
 	import { page } from '$app/state';
 	let { title = '标题', back = true } = $props();
 
+	const tabs = [
+		{
+			name: '首页',
+			href: '/'
+		},
+		{
+			name: '角色',
+			href: '/characters'
+		},
+		{
+			name: '小窝这块',
+			href: '/login'
+		},
+		{
+			name: '其他',
+			href: '/others'
+		},
+		{
+			name: '关于',
+			href: '/about'
+		}
+	];
+
 	let isShow = $state(false);
 
 	back = page.url.pathname === '/' ? false : true;
@@ -56,8 +79,13 @@
 		<h1 class="m-0 cursor-pointer text-gray-400 text-xl font-bold">{title}</h1>
 
 		<div class="hidden md:flex space-x-6">
-			<a href="/tools" class="text-gray-400 hover:text-black transition-colors"> 角色 </a>
-			<a href="/about" class="text-gray-400 hover:text-black transition-colors"> 小窝这块 </a>
+			{#each tabs as { name, href }, index}
+				{#if index > 2}
+					<a {href} class="text-gray-400 hover:text-black transition-colors">
+						{name}
+					</a>
+				{/if}
+			{/each}
 		</div>
 	</div>
 
@@ -108,24 +136,15 @@
 
 			<!-- Menu items -->
 			<div class="mt-8 space-y-2">
-				<a
-					href="/"
-					class="block px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
-				>
-					首页
-				</a>
-				<a
-					href="/tools"
-					class="block px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
-				>
-					角色
-				</a>
-				<a
-					href="/about"
-					class="block px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
-				>
-					小窝这块
-				</a>
+				{#each tabs as { name, href }, index}
+					<a
+						{href}
+						class="block px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
+						onclick={() => (isShow = false)}
+					>
+						{name}
+					</a>
+				{/each}
 			</div>
 		</div>
 	</div>

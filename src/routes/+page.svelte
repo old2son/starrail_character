@@ -29,9 +29,6 @@
 
 	let videoOffsetX = $state(0);
 	let videoOffsetY = $state(0);
-	let isDragging = $state(false);
-	let dragStartX = $state(0);
-	let dragStartY = $state(0);
 
 	const weatherMap = [
 		{ keyword: '雨', icon: '🌧' },
@@ -100,45 +97,7 @@
 		}
 
 		ctx.drawImage(video, sx, sy, sw, sh, videoOffsetX, videoOffsetY, cw, ch);
-		requestAnimationFrame(draw);
-	};
-
-	// Drag event handlers
-	const handleMouseDown = (/** @type {MouseEvent} */ e) => {
-		isDragging = true;
-		dragStartX = e.clientX - videoOffsetX;
-		dragStartY = e.clientY - videoOffsetY;
-	};
-
-	const handleMouseMove = (/** @type {MouseEvent} */ e) => {
-		if (!isDragging) return;
-		
-		videoOffsetX = e.clientX - dragStartX;
-		videoOffsetY = e.clientY - dragStartY;
-	};
-
-	const handleMouseUp = () => {
-		isDragging = false;
-	};
-
-	// Touch event handlers for mobile
-	const handleTouchStart = (/** @type {TouchEvent} */ e) => {
-		const touch = e.touches[0];
-		isDragging = true;
-		dragStartX = touch.clientX - videoOffsetX;
-		dragStartY = touch.clientY - videoOffsetY;
-	};
-
-	const handleTouchMove = (/** @type {TouchEvent} */ e) => {
-		if (!isDragging) return;
-		
-		const touch = e.touches[0];
-		videoOffsetX = touch.clientX - dragStartX;
-		videoOffsetY = touch.clientY - dragStartY;
-	};
-
-	const handleTouchEnd = () => {
-		isDragging = false;
+		// requestAnimationFrame(draw);
 	};
 
 	/**
@@ -187,13 +146,11 @@
 	{/snippet}
 </Weather>
 
-<svelte:window on:resize={canvasSize} on:mousemove={handleMouseMove} on:mouseup={handleMouseUp} on:touchmove={handleTouchMove} on:touchend={handleTouchEnd} />
+<svelte:window on:resize={canvasSize} />
 
 <canvas 
-	class="fixed top-0 z-0 cursor-move" 
+	class="fixed top-0 z-0" 
 	bind:this={canvas}
-	onmousedown={handleMouseDown}
-	ontouchstart={handleTouchStart}
 ></canvas>
 
 {#if $toast.show}

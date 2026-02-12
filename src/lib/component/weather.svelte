@@ -1,6 +1,5 @@
 <script>
 	import { PUBLIC_API_WEATHER_KEY } from '$env/static/public';
-	import { onMount } from 'svelte';
 	/**
 	 * @typedef Props
 	 * @property {string} city

@@ -14,7 +14,7 @@
 		},
 		{
 			id: 4,
-			name: '用户',
+			name: '我的',
 			href: '/user',
 			show: true,
 			isAuth: true
@@ -33,7 +33,7 @@
 	<nav 
 		transition:slide={{duration: 300}} 
 		onmouseleave={() => headerHover.set(false)}
-		class="md:hidden flex justify-around relative z-20 px-2 my-0 leading-10 overflow-hidden bg-black/80"
+		class="flex justify-around relative z-20 px-2 my-0 leading-10 overflow-hidden bg-black/80"
 	>
 		{#each tabs as { name, href, show, isAuth }, index}
 			<!-- true 表示已登录，false 表示未登录，undefined 表示无需登录  -->
