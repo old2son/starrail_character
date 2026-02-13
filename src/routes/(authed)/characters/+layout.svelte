@@ -11,7 +11,7 @@
 		<a
 			href="/characters/{name}"
 			data-id={id}
-			onmouseenter={() => {
+			onclick={() => {
 				if (get(characterId) !== id) {
 					characterId.set(id);
 				}

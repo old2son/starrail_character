@@ -3,8 +3,6 @@
 	import { setSource } from './dataSource.js';
 	import Cards from './cards.svelte';
 	import Search from './search.svelte';
-	title.set('角色列表');
-	desc.set('角色列表描述');
 
 	/**
 	 * @typedef {Object} SourceItem[]
@@ -23,22 +21,36 @@
 	/**
 	 * @type {Character}
 	 */
-	let character = {
+	const characterTemplate = {
 		name: 'Character Name',
 		cName: 'Full Character Name',
 		id: 0,
 		cont: '<p>请选择角色</p>'
 	};
 
-	$: character = Object.assign(character, $characterActive);
+	let character = $derived({
+		...characterTemplate,
+		...$characterActive
+	});
+
+	$effect(() => {
+		console.log(character);
+	});
+
+	title.set('角色列表');
+	desc.set('角色列表描述');
 </script>
 
-<div class="page-characters">
-	{#if Object.keys($characterActive).length}
+<div class="flex justify-center flex-wrap text-white">
+	{#if character?.id}
 		<Cards>
 			{#snippet header()}
-				<div class="avatar-wrap">
-					<img src="/images/{character.name}.jpg" alt={character.cName} />
+				<div class="w-25 h-25 overflow-hidden rounded-sm">
+					<img
+						src="/images/{character.name}.jpg"
+						alt={character.cName}
+						class="w-full h-full object-cover"
+					/>
 				</div>
 			{/snippet}
 
@@ -51,59 +63,16 @@
 			{/snippet}
 		</Cards>
 	{:else}
-		请选择角色
+		<p class="text-gray-800 text-2xl">请选择卡片</p>
 	{/if}
 </div>
 
-<ol>
+<ol
+	class="fixed left-0 right-0 bottom-7.5 flex justify-around flex-wrap p-5 m-0 list-none rounded-t-lg bg-white"
+>
 	<Search data={setSource}>
 		{#snippet item(/** @type {SourceItem} */ prop)}
-			<li><a href={prop.source}>{prop.name}</a></li>
+			<li class="leading-9"><a href={prop.source} class="text-blue-500">{prop.name}</a></li>
 		{/snippet}
 	</Search>
 </ol>
-
-<style>
-	ol {
-		display: flex;
-		justify-content: space-around;
-		flex-wrap: wrap;
-		position: fixed;
-		left: 0px;
-		right: 0px;
-		bottom: 30px;
-		padding: 20px;
-		margin: 0;
-		list-style: none;
-		border-radius: 8px 8px 0 0;
-		background-color: #fff;
-	}
-
-	ol li {
-		line-height: 36px;
-	}
-
-	ol li a {
-		color: var(--color-theme-1);
-	}
-
-	.page-characters {
-		display: flex;
-		justify-content: center;
-		flex-wrap: wrap;
-		color: #fff;
-	}
-
-	.avatar-wrap {
-		width: 100px;
-		height: 100px;
-		overflow: hidden;
-		border-radius: 2px;
-	}
-
-	.avatar-wrap img {
-		width: 100%;
-		height: 100%;
-		object-fit: cover;
-	}
-</style>

@@ -6,12 +6,11 @@
 	let filtered = $derived(
 		data.filter((/** @type {{ source: string; }} */ item) => item.source.includes(search))
 	);
-	
 </script>
 
 <li class="li-input">
 	<label>
-		Filter(url) : <input type="text" bind:value={search} />
+		搜索(地址) : <input type="text" bind:value={search} />
 	</label>
 </li>
 

@@ -80,7 +80,8 @@
 	{#each tabs as tab, idx}
 		{#if idx === activeTab}
 			<div in:slide={{ easing: cubicInOut }} out:slide={{ easing: cubicInOut }}>
-				<svelte:component this={tab.content} />
+				<!-- 等于 svelte4 的动态组件 -->
+				<tab.content />
 			</div>
 		{/if}
 	{/each}

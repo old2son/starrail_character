@@ -1,6 +1,7 @@
 <script>
-	export let data;
 	import { title, desc } from '@src/stores.js';
+	const { data } = $props();
+
 	title.set(data.param);
 	desc.set(data.desc);
 </script>

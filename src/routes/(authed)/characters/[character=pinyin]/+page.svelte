@@ -9,7 +9,6 @@
 	import { onMount, beforeUpdate, afterUpdate, onDestroy, tick } from 'svelte';
 	import { navigating, page } from '$app/state';
 	import { title } from '@src/stores.js';
-	title.set(`角色-${page.params.character}`);
 
 	/**
 	 * @type {string | number | NodeJS.Timeout | null | undefined}
@@ -175,6 +174,8 @@
 	onDestroy(() => {
 		Model.dispose();
 	});
+
+	title.set(`角色-${page.params.character}`);
 </script>
 
 <div class="canvas-wrap">
