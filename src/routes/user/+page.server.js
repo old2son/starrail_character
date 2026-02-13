@@ -5,7 +5,7 @@ export const actions = {
 	 * @param {any} cookies
 	 */
 	logout: async ({ cookies }) => {
-		cookies.delete('logged_in', { 
+		cookies.delete('logged_in', {
 			httpOnly: false,
 			secure: false,
 			path: '/'
@@ -16,8 +16,8 @@ export const actions = {
 		const data = await request.formData();
 		const src = data.get('avatar');
 
-		if(typeof src !== 'string') {
-			return;
+		if (typeof src !== 'string') {
+			return { success: false };
 		}
 
 		cookies.set('avatarSrc', src, {
@@ -26,7 +26,10 @@ export const actions = {
 			path: '/'
 		});
 
-		throw redirect(303, '/user');
+		// throw redirect(303, '/user');
+
+		// 手动接管返回参数
+		return { success: true };
 	}
 };
 

@@ -1,7 +1,8 @@
 <script>
 	import Weather from '@src/lib/component/weather.svelte';
 	// import videoHome from '$lib/videos/home.mp4';
-	import { toast, showToast } from '$lib/store/toast.js';
+	import { showToast } from '$lib/store/toast.js';
+	import Toast from '$lib/component/Toast.svelte';
 	import { title, desc } from '@src/stores.js';
 	import { slide } from 'svelte/transition';
 
@@ -144,17 +145,4 @@
 
 <canvas class="fixed top-0 z-0" bind:this={canvas}></canvas>
 
-{#if $toast.show}
-	<div
-		class="fixed top-1/2 left-1/2 z-30 px-6 py-3 rounded-lg shadow-lg -translate-x-1/2 -translate-y-1/2 text-white text-sm animate-fade-in-out {$toast.type ===
-		'success'
-			? 'bg-green-500'
-			: $toast.type === 'error'
-				? 'bg-red-500'
-				: $toast.type === 'info'
-					? 'bg-blue-500'
-					: 'bg-orange-500'}"
-	>
-		{$toast.message}
-	</div>
-{/if}
+<Toast />

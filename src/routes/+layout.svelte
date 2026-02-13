@@ -14,7 +14,8 @@
 	afterNavigate(({ to }) => {
 		if (
 			to?.route?.id?.match(/^\/$/)?.length ||
-			to?.route?.id?.match(/^\/\(authed\)\/characters$/)?.length
+			to?.route?.id?.match(/^\/\(authed\)\/characters$/)?.length || 
+			to?.route?.id?.match(/^\/user$/)?.length
 		) {
 			hide = true;
 		} else {

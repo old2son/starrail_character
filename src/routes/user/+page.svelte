@@ -6,44 +6,119 @@
 	import avatar3 from '$lib/images/avatar_03.gif';
 	import { title, desc } from '@src/stores.js';
 	import { fly } from 'svelte/transition';
+	import { showToast } from '$lib/store/toast.js';
+	import Toast from '$lib/component/Toast.svelte';
 
 	const { data } = $props();
 
 	const imgArr = [avatar1, avatar2, avatar3];
 
 	let src = $state(data.avatarSrc || avatar_default);
+	let outerSrc = $state(data.avatarSrc || avatar_default);
 	let active = $state(0);
 	let showChoose = $state(false);
+	let isEditingName = $state(false);
+	let userName = $state('无名氏');
+
+	/**
+	 * 自动获得焦点
+	 * @param {HTMLElement} node - 目标元素
+	 */
+	function autofocus(node) {
+		node.focus();
+	}
+
+	/**
+	 * 处理表单提交
+	 * @param {Object} formElement - 表单提交输入
+	 * @param {FormData} formElement.formData - 表单数据
+	 * @param {HTMLElement|null} formElement.submitter - 提交按钮
+	 */
+	function handleSaveAvatar(formElement) {
+		return async (/** @type {any} */ { result }) => {
+			if (result?.data?.success) {
+				showToast('头像保存成功', 'success');
+				showChoose = false;
+				outerSrc = src;
+			} else {
+				showToast('头像保存失败', 'error');
+			}
+		};
+	}
 
 	title.set('个人中心');
 	desc.set('来玩吧！');
 </script>
 
-<div class="flex justify-center flex-wrap items-center min-h-screen">
-	<div
-		class="my-2.5 text-white text-base font-normal cursor-pointer"
-		onclick={() => {
-			showChoose = !showChoose;
-		}}
-		onkeydown={() => {
-			showChoose = !showChoose;
-		}}
-		role="button"
-		tabindex="0"
-		aria-label="更换头像"
-	>
-		更换头像
+<div class="min-h-lvh w-full pt-12.5 pl-5 pr-5 overflow-hidden">
+	<div class="flex flex-col items-center mt-12 mb-16">
+		<div
+			class="w-32 h-32 rounded-full bg-amber-400 flex items-center justify-center text-white text-4xl font-bold shadow-lg mb-4"
+		>
+			<h1 class="w-full h-full flex items-center justify-center">
+				<img src={outerSrc} alt="avator default" class="w-full h-full rounded-full object-cover" />
+			</h1>
+		</div>
+		{#if isEditingName}
+			<input
+				type="text"
+				value={userName}
+				oninput={(/** @type {Event} */ e) => {
+					if (!e.target || !(e.target instanceof HTMLInputElement)) {
+						return;
+					}
+
+					userName = e.target.value;
+				}}
+				onblur={() => {
+					isEditingName = false;
+
+					if (!userName) {
+						userName = '无名氏';
+					}
+				}}
+				class="text-2xl text-center font-black text-zinc-900 border-b-2 border-zinc-900 outline-none"
+				use:autofocus
+			/>
+		{:else}
+			<b
+				class="text-2xl text-center font-black text-zinc-900 cursor-pointer"
+				onclick={() => (isEditingName = true)}
+				onkeydown={() => {}}
+				tabindex="0"
+				role="button"
+			>
+				{userName}
+			</b>
+		{/if}
+		<p
+			class="text-zinc-400 text-[10px] tracking-[0.3em] mt-8 border border-zinc-100 px-3 py-1 rounded-full uppercase"
+		>
+			Premium Member
+		</p>
 	</div>
 
-	<div class="flex justify-center flex-wrap basis-full">
-		<h1 class="basis-full my-2.5">
-			<img {src} alt="avator default" class="w-24 h-24 rounded-full" />
-		</h1>
+	<div class="space-y-4">
+		<button
+			onclick={() => {
+				showChoose = !showChoose;
+			}}
+			class="w-full h-20 bg-zinc-900 rounded-2xl flex items-center justify-between px-6 text-white group active:scale-[0.98] transition-all"
+		>
+			<span class="text-lg font-bold">更换头像</span>
+			<span
+				class="bg-zinc-700 px-3 py-1 rounded-full text-xs font-medium tracking-tighter uppercase"
+				>EDIT</span
+			>
+		</button>
+
 		<form method="POST" action="?/logout">
 			<button
-				class="px-4 py-2.5 border border-gray-300 rounded-md text-gray-500 bg-white cursor-pointer hover:bg-gray-100"
-				>log out</button
+				class="w-full h-20 bg-white border-2 border-zinc-100 rounded-2xl flex items-center justify-between px-6 text-zinc-900 group active:scale-[0.98] transition-all"
 			>
+				<span class="text-lg font-bold">离开小窝</span>
+				<span class="text-zinc-300 font-black text-xl">→</span>
+			</button>
 		</form>
 	</div>
 
@@ -59,14 +134,14 @@
 			<div class="flex justify-center mt-2">
 				<h2 class="text-center text-xl font-bold text-slate-800 mb-2">选择你的头像</h2>
 			</div>
-			
+
 			<div
-				class="w-32 h-32 m-auto mt-2 rounded-full shadow-xl bg-amber-400 shadow-amber-200  text-white transform transition-all duration-500"
+				class="relative z-1 w-32 h-32 m-auto mt-2 rounded-full shadow-xl bg-amber-400 shadow-amber-200 text-white transform transition-all duration-500"
 			>
-				<img {src} alt="avator default" class="w-full h-full rounded-full" />
+				<img {src} alt="avator default" class="w-full h-full rounded-full object-cover" />
 			</div>
 
-			<form method="POST" action="?/saveAvatar" use:enhance>
+			<form method="POST" action="?/saveAvatar" use:enhance={handleSaveAvatar}>
 				<div class="grid grid-cols-3 gap-3 mt-5">
 					{#each imgArr as img, i}
 						<div
@@ -80,7 +155,7 @@
 							role="button"
 							tabindex={i}
 						>
-							<img src={img} alt="avator other" class="w-full h-full rounded-full" />
+							<img src={img} alt="avator other" class="w-full h-full rounded-full object-cover" />
 						</div>
 					{/each}
 				</div>
@@ -108,3 +183,5 @@
 		></div>
 	{/if}
 </div>
+
+<Toast />

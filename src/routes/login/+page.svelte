@@ -2,7 +2,8 @@
 	import { enhance } from '$app/forms';
 	import { title, desc } from '@src/stores.js';
 	import { fly } from 'svelte/transition';
-	import { toast, showToast } from '$lib/store/toast.js';
+	import { showToast } from '$lib/store/toast.js';
+	import Toast from '$lib/component/Toast.svelte';
 
 	const { form } = $props();
 	console.log(form);
@@ -72,17 +73,4 @@
 	</div>
 {/if}
 
-{#if $toast.show}
-	<div
-		class="fixed top-1/2 left-1/2 z-30 px-6 py-3 rounded-lg shadow-lg -translate-x-1/2 -translate-y-1/2 text-white text-sm animate-fade-in-out {$toast.type ===
-	'success'
-		? 'bg-green-500'
-		: $toast.type === 'error'
-			? 'bg-red-500'
-			: $toast.type === 'info'
-				? 'bg-blue-500'
-				: 'bg-orange-500'}"
-	>
-		{$toast.message}
-	</div>
-{/if}
+<Toast />
