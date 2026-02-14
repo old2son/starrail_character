@@ -1,5 +1,6 @@
 <script>
 	import { title, desc, characterActive } from '@src/stores.js';
+	import { goto } from '$app/navigation';
 	import { setSource } from './dataSource.js';
 	import Cards from './cards.svelte';
 	import Search from './search.svelte';
@@ -33,9 +34,9 @@
 		...$characterActive
 	});
 
-	$effect(() => {
-		console.log(character);
-	});
+	const handleGoToCharacter = () => {
+		goto(`/characters/${character.name}`);
+	};
 
 	title.set('角色列表');
 	desc.set('角色列表描述');
@@ -45,17 +46,23 @@
 	{#if character?.id}
 		<Cards>
 			{#snippet header()}
-				<div class="w-25 h-25 overflow-hidden rounded-sm">
+				<div
+					class="w-25 h-25 m-auto overflow-hidden rounded-sm"
+					onclick={handleGoToCharacter}
+					onkeydown={() => {}}
+					role="button"
+					tabindex="0"
+				>
 					<img
 						src="/images/{character.name}.jpg"
 						alt={character.cName}
-						class="w-full h-full object-cover"
+						class="w-full h-full object-cover rounded-full"
 					/>
 				</div>
 			{/snippet}
 
 			{#snippet children()}
-				<div>{character.cName}</div>
+				<div class="w-full mt-3 text-xl text-gray-600">{character.cName}</div>
 			{/snippet}
 
 			{#snippet footer()}

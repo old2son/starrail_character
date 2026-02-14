@@ -78,7 +78,6 @@
 
 	<Nav {logged} />
 
-
 	<div class="flex items-center justify-between w-full">
 		<h1 class="m-0 cursor-pointer text-gray-400 text-xl font-bold">{title}</h1>
 

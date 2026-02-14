@@ -3,13 +3,13 @@
 </script>
 
 <div class="flex justify-center flex-wrap text-center">
-    <div class="mb-5">
+    <div class="w-full">
         {@render header?.()}
     </div>
-    <div class="flex-basis-full">
+    <div class="w-full">
         {@render children?.()}
     </div>
-    <div class="flex-basis-full">
+    <div class="w-full">
         {@render footer?.()}
     </div>
 </div>

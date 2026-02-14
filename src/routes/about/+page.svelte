@@ -1,4 +1,5 @@
 <script>
+	import { onMount } from 'svelte';
 	import { slide } from 'svelte/transition';
 	import { cubicInOut } from 'svelte/easing';
 	import { title, desc } from '@src/stores.js';
@@ -33,8 +34,7 @@
 		}, 2000);
 	};
 
-	// 这里是指 onMount 生命周期
-	$effect(() => {
+	onMount(() => {
 		timeInterFn();
 	});
 </script>

@@ -1,4 +1,5 @@
 <script>
+	import { onMount } from 'svelte';
 	import Weather from '@src/lib/component/weather.svelte';
 	// import videoHome from '$lib/videos/home.mp4';
 	import { showToast } from '$lib/store/toast.js';
@@ -113,8 +114,7 @@
 		);
 	}
 
-	// 代指 onMount 生命周期
-	$effect(() => {
+	onMount(() => {
 		videoInit();
 		canvasSize();
 		draw();

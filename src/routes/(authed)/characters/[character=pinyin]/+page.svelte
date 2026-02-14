@@ -6,7 +6,7 @@
 	import { MMDLoader } from 'three/addons/loaders/MMDLoader.js';
 	// @ts-ignore
 	import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-	import { onMount, beforeUpdate, afterUpdate, onDestroy, tick } from 'svelte';
+	import { onMount, onDestroy, tick } from 'svelte';
 	import { navigating, page } from '$app/state';
 	import { title } from '@src/stores.js';
 
@@ -14,11 +14,11 @@
 	 * @type {string | number | NodeJS.Timeout | null | undefined}
 	 */
 	let timeId = null;
-	let loadFin = false;
-	let lc = false;
-	let isshow = false; // 显示没总长度的已加载
+	let loadFin = $state(false);
+	let lc = $state(false);
+	let isshow = $state(false); // 显示没总长度的已加载
 
-	$: progress = 0;
+	let progress = $state(0);
 
 	/**
 	 * @type {HTMLCanvasElement}
@@ -36,8 +36,8 @@
 	let Model;
 
 	let isMove = false;
-	const pos = { x: 0, y: 9.1, z: 19 };
-	const look = { x: 0, y: 9.1, z: 0 };
+	let pos = $state({ x: 0, y: 9.1, z: 19 });
+	let look = $state({ x: 0, y: 9.1, z: 0 });
 
 	class model {
 		/**
@@ -146,16 +146,6 @@
 		}
 	}
 
-	onMount(() => {
-		Model = new model(canvas);
-		Model.loadModel(page.params.character);
-	});
-
-	// onMount 初始化前会执行一次beforeUpdate
-	beforeUpdate(() => {});
-
-	afterUpdate(() => {});
-
 	beforeNavigate(({ to }) => {
 		if (to === null || to?.params === null) {
 			return;
@@ -166,10 +156,17 @@
 		progress = 0;
 		Model.dispose();
 		Model.init();
+		// @ts-ignore
 		Model.loadModel(to.params.character);
 	});
 
 	afterNavigate(() => {});
+
+	onMount(() => {
+		Model = new model(canvas);
+		// @ts-ignore
+		Model.loadModel(page.params.character);
+	});
 
 	onDestroy(() => {
 		Model.dispose();
@@ -178,21 +175,33 @@
 	title.set(`角色-${page.params.character}`);
 </script>
 
-<div class="canvas-wrap">
+<div class="w-full">
 	<div class="js-inner" bind:this={inner}>
-		<canvas bind:this={canvas}></canvas>
+		<canvas bind:this={canvas} class="w-[50vw] h-[50vh] mx-auto"></canvas>
 	</div>
-	<h1>{page.params.character}</h1>
+	<h1 class="flex-basis-full text-center text-white">{page.params.character}</h1>
 </div>
 
 {#if progress !== 100 && lc}
-	<div in:fade out:fade class="mask">loading {progress}%</div>
+	<div
+		in:fade
+		out:fade
+		class="fixed inset-0 z-2 flex items-center justify-center bg-black/50 text-white text-lg"
+	>
+		loading {progress}%
+	</div>
 {:else if !lc && !loadFin && isshow}
-	<div in:fade out:fade class="mask">已加载 {progress} MB</div>
+	<div
+		in:fade
+		out:fade
+		class="fixed inset-0 z-2 flex items-center justify-center bg-black/50 text-white text-lg"
+	>
+		已加载 {progress} MB
+	</div>
 {/if}
 
 <div
-	class="range-wrap"
+	class="p-5 pb-20vh text-white"
 	onmouseenter={() => {
 		isMove = true;
 	}}
@@ -208,6 +217,7 @@
 		min="-100"
 		step="0.1"
 		max="100"
+		class="w-full"
 		oninput={() => {
 			Model.setCamera(pos, look);
 		}}
@@ -218,6 +228,7 @@
 		min="-100"
 		step="0.1"
 		max="100"
+		class="w-full"
 		oninput={() => {
 			Model.setCamera(pos, look);
 		}}
@@ -228,11 +239,13 @@
 		min="-100"
 		step="0.1"
 		max="100"
+		class="w-full"
 		oninput={() => {
 			Model.setCamera(pos, look);
 		}}
 	/>z：{pos.z}
 	<button
+		class="block mx-auto my-5 px-2 py-0.5 bg-white text-gray-800 rounded-md cursor-pointer"
 		onclick={() => {
 			pos.x = 0;
 			pos.y = 0;
@@ -248,6 +261,7 @@
 		min="-100"
 		step="0.1"
 		max="100"
+		class="w-full"
 		oninput={() => {
 			Model.setCamera(pos, look);
 			Model.setControl(look);
@@ -259,6 +273,7 @@
 		min="-100"
 		step="0.1"
 		max="100"
+		class="w-full"
 		oninput={() => {
 			Model.setCamera(pos, look);
 			Model.setControl(look);
@@ -270,12 +285,14 @@
 		min="-100"
 		step="0.1"
 		max="100"
+		class="w-full"
 		oninput={() => {
 			Model.setCamera(pos, look);
 			Model.setControl(look);
 		}}
 	/>z：{look.z}
 	<button
+		class="block mx-auto my-5 px-2 py-0.5 bg-white text-gray-800 rounded-md cursor-pointer"
 		onclick={() => {
 			look.x = 0;
 			look.y = 0;
@@ -285,59 +302,3 @@
 		}}>reset look at zero</button
 	>
 </div>
-
-<style>
-	.canvas-wrap {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		flex-wrap: wrap;
-
-		& canvas {
-			width: 50vw;
-			height: 50vh;
-		}
-
-		& h1 {
-			flex-basis: 100%;
-			text-align: center;
-			color: #fff;
-		}
-	}
-
-	.mask {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		position: fixed;
-		top: 0;
-		bottom: 0;
-		left: 0;
-		right: 0;
-		z-index: 2;
-		color: #fff;
-		font-size: 18px;
-		background: hsla(0, 0%, 0%, 0.5);
-	}
-
-	.range-wrap {
-		padding: 20px 20px 20vh;
-		color: #fff;
-
-		& input {
-			width: 100%;
-		}
-
-		& button {
-			display: block;
-			line-height: 35px;
-			padding: 0 8px;
-			margin: 20px auto;
-			cursor: pointer;
-			border: 0;
-			border-radius: 4px;
-			color: #333;
-			background-color: #fff;
-		}
-	}
-</style>
