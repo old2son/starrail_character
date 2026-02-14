@@ -5,6 +5,8 @@
 
 	let { logged } = $props();
 
+	console.log(logged);
+
 	const tabs = [
 		{
 			id: 3,
@@ -14,7 +16,7 @@
 		},
 		{
 			id: 4,
-			name: '我的',
+			name: '个人中心',
 			href: '/user',
 			show: true,
 			isAuth: true
