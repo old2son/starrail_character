@@ -24,7 +24,8 @@ export const actions = {
 			cookies.set('logged_in', 'true', {
 				httpOnly: false,
 				secure: false,
-				path: '/'
+				path: '/',
+				maxAge: 60 * 60 * 24 * 7
 			});
 
 			const redirectTo = url.searchParams.get('redirectTo') ?? '/';

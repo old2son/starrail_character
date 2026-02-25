@@ -6,7 +6,6 @@
 	import Toast from '$lib/component/Toast.svelte';
 
 	const { form } = $props();
-	console.log(form);
 
 	let visible = $state(false);
 

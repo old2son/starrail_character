@@ -4,9 +4,7 @@
 	import { slide } from 'svelte/transition';
 
 	let { logged } = $props();
-
-	console.log(logged);
-
+	console.log('navLogged', logged);
 	const tabs = [
 		{
 			id: 3,
@@ -16,15 +14,8 @@
 		},
 		{
 			id: 4,
-			name: '个人中心',
-			href: '/user',
-			show: true,
-			isAuth: true
-		},
-		{
-			id: 5,
 			name: '小窝这块',
-			href: '/login',
+			href: '/user',
 			show: true,
 			isAuth: false
 		}
@@ -32,22 +23,26 @@
 </script>
 
 {#if $headerHover}
-	<nav 
-		transition:slide={{duration: 300}} 
+	<nav
+		transition:slide={{ duration: 300 }}
 		onmouseleave={() => headerHover.set(false)}
 		class="flex justify-around absolute top-full left-0 right-0 z-1 px-2 my-0 leading-10 overflow-hidden bg-black/80"
 	>
 		{#each tabs as { name, href, show, isAuth }, index}
-			<!-- true 表示已登录，false 表示未登录，undefined 表示无需登录  -->
-			{#if show && (isAuth === undefined || isAuth === logged)}
-				<a 
-					href={href} 
-					class="px-5 border-b-2 border-transparent no-underline text-yellow-600 text-sm transition-colors {page.url.pathname === href ? 'border-yellow-600' : 'hover:border-yellow-600'}"
+			<!-- isAuth 未登录也不显示  -->
+			<!-- {#if show && isAuth !== false} -->
+			{#if show}
+				<a
+					href={!isAuth ? '/login' : href}
+					class="px-5 border-b-2 border-transparent no-underline text-yellow-600 text-sm transition-colors {page
+						.url.pathname === href
+						? 'border-yellow-600'
+						: 'hover:border-yellow-600'}"
 				>
 					{name}
+					{isAuth}
 				</a>
 			{/if}
 		{/each}
 	</nav>
 {/if}
-

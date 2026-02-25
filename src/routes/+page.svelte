@@ -92,7 +92,6 @@
 	 */
 	// 接收子组件传递过来的数据
 	function handleUpdate(event) {
-		console.log(event);
 		weatherResult = JSON.parse(JSON.stringify(event));
 
 		if (!weatherResult) {

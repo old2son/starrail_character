@@ -6,6 +6,8 @@
 	import { page } from '$app/state';
 	let { title = '标题', back = true, logged = false } = $props();
 
+	console.log('headerLogged', logged);
+
 	const tabs = [
 		{
 			name: '首页',
@@ -17,7 +19,7 @@
 		},
 		{
 			name: '小窝这块',
-			href: '/login'
+			href: '/user'
 		},
 		{
 			name: '其他',
