@@ -1,12 +1,19 @@
 <script>
 	import { fade } from 'svelte/transition';
 	import { beforeNavigate, afterNavigate } from '$app/navigation';
-	import * as THREE from 'three';
-	import { MMDLoader } from 'three/addons/loaders/MMDLoader.js';
-	import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+	// import * as THREE from 'three';
+	// import { MMDLoader } from 'three/addons/loaders/MMDLoader.js';
+	// import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 	import { onMount, onDestroy } from 'svelte';
 	import { page } from '$app/state';
 	import { title } from '@src/stores.js';
+
+	/** @type {typeof import('three')} */
+	let THREE;
+	/** @type {typeof import('three/addons/loaders/MMDLoader.js').MMDLoader} */
+	let MMDLoader;
+	/** @type {typeof import('three/addons/controls/OrbitControls.js').OrbitControls} */
+	let OrbitControls;
 
 	/**
 	 * @type {string | number | NodeJS.Timeout | null | undefined}
@@ -159,10 +166,21 @@
 
 	afterNavigate(() => {});
 
-	onMount(() => {
+	onMount(async () => {
+		THREE = await import('three');
+
+		// ⚠️ 注意这里路径改了（非常重要）
+		({ MMDLoader } = await import('three/addons/loaders/MMDLoader.js'));
+
+		({ OrbitControls } = await import('three/addons/controls/OrbitControls.js'));
+
 		Model = new model(canvas);
-		// @ts-ignore
-		Model.loadModel(page.params.character);
+
+		const character = page.params.character;
+
+		if (!character) return;
+
+		Model.loadModel(character);
 	});
 
 	onDestroy(() => {
