@@ -17,7 +17,7 @@
 		},
 		{
 			name: '小窝这块',
-			href: '/login'
+			href: '/user'
 		},
 		{
 			name: '其他',
@@ -82,7 +82,7 @@
 		<h1 class="m-0 cursor-pointer text-gray-400 text-xl font-bold">{title}</h1>
 
 		<div class="hidden md:flex space-x-6">
-			{#each tabs as { name, href }, index}
+			{#each tabs as { name, href }, index (index)}
 				{#if index > 2}
 					<a {href} class="text-gray-400 hover:text-black transition-colors">
 						{name}

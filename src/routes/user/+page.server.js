@@ -23,7 +23,8 @@ export const actions = {
 		cookies.set('avatarSrc', src, {
 			httpOnly: false,
 			secure: false,
-			path: '/'
+			path: '/',
+			maxAge: 60 * 60 * 24 *7
 		});
 
 		// throw redirect(303, '/user');

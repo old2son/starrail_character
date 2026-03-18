@@ -5,6 +5,7 @@
 
 	let { logged } = $props();
 
+
 	const tabs = [
 		{
 			id: 3,
@@ -35,7 +36,7 @@
 		onmouseleave={() => headerHover.set(false)}
 		class="flex justify-around absolute top-full left-0 right-0 z-1 px-2 my-0 leading-10 overflow-hidden bg-black/80"
 	>
-		{#each tabs as { name, href, show, isAuth }, index}
+		{#each tabs as { name, href, show, isAuth }, index (href)}
 			<!-- true 表示已登录，false 表示未登录，undefined 表示无需登录  -->
 			{#if show && (isAuth === undefined || isAuth === logged)}
 				<a 
