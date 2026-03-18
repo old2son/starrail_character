@@ -2,12 +2,9 @@
 	import { fade } from 'svelte/transition';
 	import { beforeNavigate, afterNavigate } from '$app/navigation';
 	import * as THREE from 'three';
-	// @ts-ignore
-	import { MMDLoader } from 'three/addons/loaders/MMDLoader.js';
-	// @ts-ignore
-	import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-	import { onMount, onDestroy, tick } from 'svelte';
-	import { navigating, page } from '$app/state';
+	import { MMDLoader, OrbitControls } from 'three-stdlib';
+	import { onMount, onDestroy } from 'svelte';
+	import { page } from '$app/state';
 	import { title } from '@src/stores.js';
 
 	/**
@@ -35,7 +32,6 @@
 	 */
 	let Model;
 
-	let isMove = false;
 	let pos = $state({ x: 0, y: 9.1, z: 19 });
 	let look = $state({ x: 0, y: 9.1, z: 0 });
 
@@ -99,7 +95,7 @@
 			const loader = new MMDLoader().setPath(`/model/${name}/`);
 			loader.load(
 				`${name}.pmx`,
-				function (/** @type {THREE.Object3D<THREE.Event>} */ mesh) {
+				function (/** @type {THREE.Object3D} */ mesh) {
 					that.scene.add(mesh);
 					that.animate();
 				},
@@ -200,16 +196,7 @@
 	</div>
 {/if}
 
-<div
-	class="p-5 pb-20vh text-white"
-	onmouseenter={() => {
-		isMove = true;
-	}}
-	onmouseleave={() => {
-		isMove = false;
-	}}
-	role="form"
->
+<div class="p-5 pb-20vh text-white" onmouseenter={() => {}} onmouseleave={() => {}} role="form">
 	<h2>set camera position：</h2>
 	<input
 		type="range"

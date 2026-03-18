@@ -5,8 +5,6 @@
 
 	let { logged } = $props();
 
-	console.log(logged);
-
 	const tabs = [
 		{
 			id: 3,

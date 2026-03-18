@@ -12,7 +12,6 @@
 	};
 
 	afterNavigate(({ to }) => {
-		console.log(to);
 		if (
 			to?.route?.id?.match(/^\/$/)?.length ||
 			to?.route?.id?.match(/^\/\(authed\)\/characters/)?.length || 
