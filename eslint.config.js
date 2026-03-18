@@ -20,5 +20,10 @@ export default [
 	{
 		files: ['**/*.svelte', '**/*.svelte.js'],
 		languageOptions: { parserOptions: { svelteConfig } }
+	},
+	{
+		rules: {
+			'@sveltejs/no-unsafe-href': 'off'
+		}
 	}
 ];

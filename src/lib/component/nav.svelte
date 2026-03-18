@@ -4,7 +4,6 @@
 	import { slide } from 'svelte/transition';
 
 	let { logged } = $props();
-	console.log('navLogged', logged);
 	const tabs = [
 		{
 			id: 3,
@@ -28,7 +27,7 @@
 		onmouseleave={() => headerHover.set(false)}
 		class="flex justify-around absolute top-full left-0 right-0 z-1 px-2 my-0 leading-10 overflow-hidden bg-black/80"
 	>
-		{#each tabs as { name, href, show, isAuth }, index}
+		{#each tabs as { name, href, show, isAuth }, index (href)}
 			<!-- isAuth 未登录也不显示  -->
 			<!-- {#if show && isAuth !== false} -->
 			{#if show}
@@ -40,7 +39,6 @@
 						: 'hover:border-yellow-600'}"
 				>
 					{name}
-					{isAuth}
 				</a>
 			{/if}
 		{/each}

@@ -6,8 +6,6 @@
 	import { page } from '$app/state';
 	let { title = '标题', back = true, logged = false } = $props();
 
-	console.log('headerLogged', logged);
-
 	const tabs = [
 		{
 			name: '首页',
@@ -84,7 +82,7 @@
 		<h1 class="m-0 cursor-pointer text-gray-400 text-xl font-bold">{title}</h1>
 
 		<div class="hidden md:flex space-x-6">
-			{#each tabs as { name, href }, index}
+			{#each tabs as { name, href }, index (index)}
 				{#if index > 2}
 					<a {href} class="text-gray-400 hover:text-black transition-colors">
 						{name}
