@@ -1,5 +1,5 @@
-// import adapter from '@sveltejs/adapter-auto';
-import adapter from '@sveltejs/adapter-node';
+import adapter from '@sveltejs/adapter-auto';
+// import adapter from '@sveltejs/adapter-node';
 // import adapter from '@sveltejs/adapter-static'; // +layout.js  设置 prerender 
 
 /** @type {import('@sveltejs/kit').Config} */
