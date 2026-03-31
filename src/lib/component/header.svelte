@@ -6,6 +6,8 @@
 	import { page } from '$app/state';
 	let { title = '标题', back = true, logged = false } = $props();
 
+	const homeHref = logged ? '/user' : '/login?redirectTo=/user';
+
 	const tabs = [
 		{
 			name: '首页',
@@ -17,7 +19,7 @@
 		},
 		{
 			name: '小窝这块',
-			href: '/user'
+			href: homeHref
 		},
 		{
 			name: '其他',
@@ -82,7 +84,7 @@
 		<h1 class="m-0 cursor-pointer text-gray-400 text-xl font-bold">{title}</h1>
 
 		<div class="hidden md:flex space-x-6">
-			{#each tabs as { name, href }, index (index)}
+			{#each tabs as { name, href }, index (name)}
 				{#if index > 2}
 					<a {href} class="text-gray-400 hover:text-black transition-colors">
 						{name}
@@ -139,7 +141,7 @@
 
 			<!-- Menu items -->
 			<div class="mt-8 space-y-2">
-				{#each tabs as { name, href }, index}
+				{#each tabs as { name, href }, index (name)}
 					<a
 						{href}
 						class="block px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"

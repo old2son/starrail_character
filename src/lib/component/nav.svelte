@@ -23,7 +23,7 @@
 		{
 			id: 5,
 			name: '小窝这块',
-			href: '/login',
+			href: '/login?redirectTo=/user',
 			show: true,
 			isAuth: false
 		}

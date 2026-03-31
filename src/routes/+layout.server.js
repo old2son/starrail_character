@@ -1,11 +1,9 @@
 /**
- * @param {any} cookies
-*/
+ * @param {Object} params
+ * @param {import('@sveltejs/kit').Cookies} params.cookies
+ */
 export function load({ cookies }) {
 	const logged = cookies.get('logged_in');
-
-	// debugger load没执行?
-	console.log(logged);
 
 	return {
 		logged: Boolean(logged)

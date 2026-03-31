@@ -32,7 +32,7 @@
 	<nav
 		class="flex justify-around mt-18.5 p-2 mx-5 mb-5 rounded-full bg-white overflow-hidden "
 	>
-		{#each character.model as { name, cName, alias, id }, index}
+		{#each character.model as { name, cName, alias, id }, index (id)}
 			<a
 			href="/characters/{name}"
 			data-id={id}

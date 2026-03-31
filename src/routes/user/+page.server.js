@@ -24,7 +24,7 @@ export const actions = {
 			httpOnly: false,
 			secure: false,
 			path: '/',
-			maxAge: 60 * 60 * 24 *7
+			maxAge: 60 * 60 * 24 * 7
 		});
 
 		// throw redirect(303, '/user');
@@ -34,8 +34,12 @@ export const actions = {
 	}
 };
 
-export function load({ cookies }) {
+export function load({ cookies, url }) {
 	const avatarSrc = cookies.get('avatarSrc');
+
+	if (!cookies.get('logged_in')) {
+		throw redirect(303, `/login?redirectTo=${url.pathname}`);
+	}
 
 	return {
 		avatarSrc

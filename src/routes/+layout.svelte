@@ -3,7 +3,7 @@
 	import './styles.css';
 	import { title, desc, headerHover } from '@src/stores.js';
 	import Header from '@src/lib/component/header.svelte';
-	let { children } = $props();
+	let { data, children } = $props();
 
 	let hide = $state(true);
 
@@ -35,7 +35,7 @@
 	<meta name="description" content={$desc} />
 </svelte:head>
 
-<Header title={$title} />
+<Header title={$title} logged={data?.logged} />
 {@render children?.()}
 <footer>
 	<button class="fixed left-1/2 bottom-20 w-30 h-8.75 leading-8.75 text-center border-0 rounded-[40px] cursor-pointer -translate-x-1/2 text-white bg-gray-500 {hide ? 'hidden' : ''}" onclick={goBack}>返回</button>
